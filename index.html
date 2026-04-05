@@ -86,26 +86,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .chip[data-f="food"].on{background:var(--terracotta)}
 .chip[data-f="other"].on{background:var(--lavender)}
 
-.cards-list{padding:8px 14px calc(var(--sab)+90px);display:flex;flex-direction:column;gap:10px}
-.card{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);cursor:pointer;transition:transform .15s,box-shadow .15s}
-.card:active{transform:scale(.985);box-shadow:0 1px 8px rgba(0,0,0,.07)}
-.card-stripe{height:3px}
-.cat-place .card-stripe{background:linear-gradient(90deg,var(--leaf),var(--lime))}
-.cat-stay .card-stripe{background:linear-gradient(90deg,var(--sky),#70c0e0)}
-.cat-food .card-stripe{background:linear-gradient(90deg,var(--terracotta),var(--amber))}
-.cat-other .card-stripe{background:linear-gradient(90deg,var(--lavender),#b090e0)}
-.card-inner{padding:13px 14px 14px}
-.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px}
-.card-name{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--ink);line-height:1.2;flex:1}
-.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
-.cat-place .cat-dot{background:var(--leaf)}
-.cat-stay .cat-dot{background:var(--sky)}
-.cat-food .cat-dot{background:var(--terracotta)}
-.cat-other .cat-dot{background:var(--lavender)}
-.card-loc{font-size:11px;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:3px}
+.cards-list{padding:8px 14px calc(var(--sab)+90px);display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);cursor:pointer;transition:transform .18s,box-shadow .18s}
+.card:active{transform:scale(.982);box-shadow:0 1px 8px rgba(0,0,0,.07)}
+
+/* Photo header */
+.card-photo{position:relative;width:100%;height:180px;overflow:hidden;background:var(--canopy)}
+.card-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.card:active .card-photo img{transform:scale(1.03)}
+.card-photo-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(10,28,18,.75) 100%)}
+.card-photo-badges{position:absolute;top:10px;left:10px;display:flex;gap:5px}
+.card-photo-cat{font-size:10px;font-weight:700;letter-spacing:.5px;padding:4px 9px;border-radius:10px;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.cat-place .card-photo-cat{background:rgba(45,122,74,.85);color:#fff}
+.cat-stay .card-photo-cat{background:rgba(58,138,176,.85);color:#fff}
+.cat-food .card-photo-cat{background:rgba(200,85,42,.85);color:#fff}
+.cat-other .card-photo-cat{background:rgba(122,90,170,.85);color:#fff}
+.card-photo-july{position:absolute;top:10px;right:10px;background:rgba(229,184,64,.9);color:#1a1208;font-size:10px;font-weight:700;padding:4px 8px;border-radius:10px;backdrop-filter:blur(4px)}
+.card-photo-name{position:absolute;bottom:10px;left:12px;right:12px}
+.card-photo-name h3{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:#fff;line-height:1.2;text-shadow:0 1px 4px rgba(0,0,0,.4)}
+.card-photo-name .card-loc-overlay{font-size:11px;color:rgba(255,255,255,.8);margin-top:2px}
+
+/* Card body below photo */
+.card-inner{padding:11px 13px 12px}
 .card-desc{font-size:13px;color:var(--ink2);line-height:1.55;margin-bottom:9px}
 .card-footer{display:flex;justify-content:space-between;align-items:center}
-.card-sources{display:flex;gap:4px}
+.card-sources{display:flex;gap:4px;flex-wrap:wrap}
 .src-badge{font-size:10px;padding:3px 7px;border-radius:8px;font-weight:600}
 .src-ig{background:#fef3e0;color:#8a6010}
 .src-tt{background:#e8f8e8;color:#1a6020}
@@ -116,6 +121,40 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .vote-count{font-size:12px;font-weight:600;color:var(--muted)}
 .save-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:3px;transition:transform .15s}
 .save-btn:active{transform:scale(1.3)}
+
+/* Photo skeleton loader */
+.card-photo-skeleton{width:100%;height:180px;background:linear-gradient(90deg,#e8e4dc 25%,#f2ede5 50%,#e8e4dc 75%);background-size:200% 100%;animation:skeleton-shimmer 1.4s infinite}
+@keyframes skeleton-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Photo gallery — card */
+.card-gallery{position:relative;width:100%;height:190px;overflow:hidden;background:var(--canopy)}
+.card-gallery-track{display:flex;height:100%;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform}
+.card-gallery-slide{flex-shrink:0;width:100%;height:100%;position:relative}
+.card-gallery-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.card-gallery-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(10,28,18,.78) 100%)}
+.card-gallery-dots{position:absolute;bottom:46px;left:0;right:0;display:flex;justify-content:center;gap:5px;pointer-events:none}
+.gallery-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.4);transition:background .2s}
+.gallery-dot.active{background:#fff}
+.gallery-src-badge{position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;padding:3px 8px;border-radius:8px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.gallery-src-ig{background:rgba(229,184,64,.85);color:#1a1208}
+.gallery-src-wiki{background:rgba(255,255,255,.75);color:#333}
+.gallery-src-unsplash{background:rgba(0,0,0,.55);color:#fff}
+.gallery-src-google{background:rgba(66,133,244,.85);color:#fff}
+.gallery-credit{position:absolute;bottom:44px;right:8px;font-size:9px;color:rgba(255,255,255,.5);pointer-events:none}
+.gallery-nav{position:absolute;top:50%;transform:translateY(-60%);background:rgba(0,0,0,.35);backdrop-filter:blur(4px);border:none;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:12px;z-index:5;transition:background .15s}
+.gallery-nav:active{background:rgba(0,0,0,.6)}
+.gallery-nav.prev{left:8px}
+.gallery-nav.next{right:8px}
+.gallery-count{position:absolute;top:10px;left:10px;font-size:10px;font-weight:600;color:rgba(255,255,255,.8);background:rgba(0,0,0,.3);backdrop-filter:blur(4px);padding:2px 7px;border-radius:8px}
+
+/* Modal gallery */
+.modal-gallery{width:100%;height:220px;position:relative;overflow:hidden;background:var(--canopy)}
+.modal-gallery-track{display:flex;height:100%;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.modal-gallery-slide{flex-shrink:0;width:100%;height:100%}
+.modal-gallery-slide img{width:100%;height:100%;object-fit:cover;display:block}
+.modal-gallery-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(10,28,18,.65) 100%)}
+.modal-gallery-dots{position:absolute;bottom:8px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.modal-gallery-credit{position:absolute;bottom:28px;right:10px;font-size:9px;color:rgba(255,255,255,.5)}
 
 /* ── PLANNER ── */
 .planner-header{background:var(--jungle);color:#fff;padding-left:20px;padding-right:20px;padding-bottom:16px;padding-top:var(--sat)}
@@ -218,6 +257,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 
 /* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(10,28,18,.65);z-index:300;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px)}
+.modal-photo-header img{transition:opacity .3s}
 .modal-overlay.open{opacity:1;pointer-events:all}
 .modal{background:var(--bg);border-radius:24px 24px 0 0;width:100%;max-height:88dvh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);padding-bottom:var(--sab)}
 .modal-overlay.open .modal{transform:translateY(0)}
@@ -516,6 +556,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
           <input class="form-input" type="password" id="claudeKey" placeholder="OR Anthropic key: sk-ant-...  (Claude)">
           <div style="font-size:11px;color:var(--muted);margin-top:4px">If you add both, OpenAI will be used. Only one is needed.</div>
         </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Google Places — for rich place photos</div>
+          <input class="form-input" type="password" id="googleKey" placeholder="Google Cloud API key (AIza...)">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">
+            Enables real Google Maps photos for every place. Free up to 5,000 photo requests/month.
+            <a href="https://console.cloud.google.com/apis/library/places-backend.googleapis.com" target="_blank" style="color:var(--leaf)">Enable Places API →</a>
+          </div>
+        </div>
       </div>
       <button class="btn btn-primary btn-sm" onclick="saveKeys()">Save keys</button>
     </div>
@@ -628,7 +676,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-accent" id="mAccent"></div>
+    <div class="modal-photo-header" id="mPhotoHeader" style="width:100%;height:200px;position:relative;overflow:hidden;background:var(--canopy)">
+      <img id="mPhoto" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block">
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(10,28,18,.7) 100%)"></div>
+    </div>
     <div class="modal-header">
       <div class="modal-cat-label" id="mCat"></div>
       <div class="modal-name" id="mName"></div>
@@ -671,54 +722,54 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 // DATA
 // ═══════════════════════════════════════════
 const TRAVEL_DATA = [
-  {id:'christ-redeemer',name:"Christ the Redeemer",category:"place",location:"Rio de Janeiro",julyTip:true,description:"One of the New Seven Wonders of the World atop Corcovado mountain. Go before 8am to beat crowds. Helicopter tour gives the best aerial views (~$80/person). About $18 USD entry via the Corcovado cog train. In July: mornings can be misty — aim for 10am–2pm for clearest views.",sources:[{type:"ig",label:"Rio mini guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Know before you go + prices",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
-  {id:'sugarloaf',name:"Sugarloaf Mountain",category:"place",location:"Rio de Janeiro",description:"Best at sunset or on a clear day — go earlier for fewer crowds. ~$45 USD entry. Second cable car from Morro da Urca gives the best panoramic Rio view. Free viewpoint at the base (Mirante do Pão de Açúcar) is also stunning.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWwsOsgDWSX/"},{type:"tt",label:"Prices & tips",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
-  {id:'mirante-dona-marta',name:"Mirante Dona Marta",category:"place",location:"Rio de Janeiro",description:"Best FREE sunset viewpoint in Rio — no entrance fee, rarely crowded. Christ the Redeemer on one side, Sugarloaf on the other. Easy Uber ride. One of the most genuinely unmissable spots that most tourists skip.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWt1KDnDWUz/"}]},
-  {id:'ipanema',name:"Ipanema & Leblon Beaches",category:"place",location:"Rio de Janeiro",julyTip:true,description:"More local-feeling than Copacabana. Bring cash for beach vendors. Ipanema Hippie Market on Sundays: food, art, vintage vinyl. In July: water is cooler (~22°C) but beach culture is very much alive. Perfect for morning walks.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Shopping guide",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
-  {id:'copacabana',name:"Copacabana Beach & Night Market",category:"place",location:"Rio de Janeiro",description:"Iconic promenade — good base for accommodation (then Uber to Ipanema). Night market has Brazil jerseys, jewelry, gifts. New Year's Eve here is legendary. Praia Vermelha nearby is quieter.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
-  {id:'selarun',name:"Escadaria Selarón",category:"place",location:"Rio de Janeiro / Lapa",description:"Mosaic staircase with tiles from 60+ countries. Best early morning before crowds. Free. Head to Santa Teresa neighborhood after for cafés and galleries. Lopa Art Café (Loja Patuá) is a beautiful nearby stop.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Know before you go",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
-  {id:'pedra-telegrafo',name:"Pedra do Telégrafo",category:"place",location:"Rio de Janeiro",description:"Dramatic cliffside hike with stunning ocean views. Popular for dramatic photos. Go early. Can combine with a full Rio day including Cristo and Sugarloaf.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWteROamn2D/"}]},
-  {id:'tijuca',name:"Tijuca National Park",category:"place",location:"Rio de Janeiro",julyTip:true,description:"World's largest urban rainforest. Download AllTrails offline before going. Hike Pedra Bonita, Primatas Waterfall, Floresta da Tijuca. Free entry. July: dry season makes trails more accessible — good visibility and cooler temps for hiking.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"},{type:"tt",label:"Prices guide",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
-  {id:'morro-dois-irmaos',name:"Morro Dois Irmãos",category:"place",location:"Rio de Janeiro",description:"Iconic sunrise hike — panoramic views over Ipanema and the Atlantic. One of the most recommended active experiences in Rio. Best combined with breakfast in Ipanema afterward.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
-  {id:'hang-glide',name:"Hang Gliding over Rio",category:"place",location:"Rio de Janeiro",description:"Described across TikTok as 'the best view in the city, hands down'. Tandem gliding launches from Pedra Bonita, lands on the beach. Multiple operators — book in advance. One of the most memorable Rio experiences.",sources:[{type:"tt",label:"Rio guide you wish you had",url:"https://www.tiktok.com/@calumtravels/video/7598552511930305800"},{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
-  {id:'rio-rooftops',name:"Rio Rooftop Bars",category:"place",location:"Rio de Janeiro",description:"Top 5: 1. Sky Leme, 2. Bar Laje, 3. Classico Beach Club, 4. Isabel Lounge, 5. Sky Lab. Smart-casual dress. Best for sunset drinks with sweeping city views — perfect for a group evening.",sources:[{type:"tt",label:"5 Rio rooftops",url:"https://www.tiktok.com/@the_rooftopguide/video/7576748413136440598"}]},
-  {id:'gabinete-leitura',name:"Gabinete de Leitura",category:"place",location:"Rio de Janeiro",description:"One of the most beautiful libraries/museums in Brazil — a hidden gem most tourists miss. Stunning neo-Gothic interior. Don't leave Rio without a stop here.",sources:[{type:"tt",label:"Hidden gem library",url:"https://www.tiktok.com/@postcardsfromayana/video/7590067195464420622"}]},
-  {id:'gloria-market',name:"Glória Sunday Market",category:"place",location:"Rio de Janeiro",description:"Local Sunday market with food, music, culture, and real community energy. Much less touristy than Selarón. Feira de Hippie in Ipanema also runs Sundays — vintage vinyl, food, art.",sources:[{type:"tt",label:"Rio guide",url:"https://www.tiktok.com/@calumtravels/video/7598552511930305800"}]},
-  {id:'rocinha',name:"Rocinha Favela Tour",category:"place",location:"Rio de Janeiro",description:"Rio's largest favela. Go with a LOCAL guide — not a bus tour. Gives real cultural context on history, urban planning, and community life. 'Be a Local' tours recommended. Vibrant culture and resilience.",sources:[{type:"tt",label:"Rocinha explained",url:"https://www.tiktok.com/@real.estates/video/7509476776700054814"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"}]},
-  {id:'museu-amanha',name:"Museu do Amanhã & MAR",category:"place",location:"Rio de Janeiro",description:"Futuristic architecture on the revitalized port waterfront. Museu de Arte do Rio (MAR) is steps away with Brazilian art and social history. Half-day minimum. Great indoor option for a rainy July day.",sources:[{type:"tt",label:"2-week Brazil itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"}]},
-  {id:'ilha-grande',name:"Ilha Grande",category:"place",location:"Rio de Janeiro state",julyTip:true,description:"Car-free island — no motorized vehicles allowed. Pristine beaches and jungle trails. Recommended for a weekend trip from Rio. July: ideal conditions — dry, cooler weather, good for hiking across the island.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Brazil spots",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"}]},
-  {id:'paraty',name:"Paraty",category:"place",location:"Rio de Janeiro state",julyTip:true,description:"UNESCO-listed colonial Portuguese town — cobblestone streets, jungle, and sea. Bus from São Paulo is comfortable. Highlights: Centro Histórico, boat trip to Lagoa Azul, Cachoeira do Tobogã. Recommend 3–5 days. July: dry season and mild weather = perfect.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"2-week Brazil itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"}]},
-  {id:'arraial-buzios',name:"Arraial do Cabo & Búzios",category:"place",location:"Rio de Janeiro state",description:"Arraial: crystal-clear turquoise water — 'Caribbean of Brazil'. Búzios: charming peninsula with beaches and nightlife. Both are great day trips from Rio (2–3hr drive) or extend to a weekend.",sources:[{type:"ig",label:"Rio mini guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"}]},
-  {id:'salvador',name:"Salvador de Bahia",category:"place",location:"Bahia",description:"Soul of Brazil — shaped by Afro-Brazilian heritage. Pelourinho district: UNESCO World Heritage, colorful colonial streets, Olodum drums Tuesday nights. Museu Afro-Brasileiro is unmissable. Brazil's first capital.",sources:[{type:"ig",label:"Salvador post",url:"https://www.instagram.com/p/DWwmBd_jRnO/"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"},{type:"yt",label:"10 Best Places in Salvador 2026",url:"https://www.youtube.com/watch?v=3Qe4iVpyeso"}]},
-  {id:'itacare',name:"Itacaré",category:"place",location:"Bahia",description:"Beach town with excellent surf, Atlantic Forest trails to beaches, and laid-back vibe. Book accommodation well in advance. Midweek is quieter. Multiple beaches reachable via jungle trails.",sources:[{type:"ig",label:"Itacaré guide",url:"https://www.instagram.com/p/DWtKaXpjTOH/"}]},
-  {id:'sao-paulo',name:"São Paulo",category:"place",location:"São Paulo",description:"Brazil's cultural capital — top-tier museums, galleries, restaurants. MASP on Paulista Avenue (free Tuesdays). Parque Ibirapuera for green space. Best neighborhoods: Vila Madalena (street art), Pinheiros, Liberdade (Japanese-Brazilian). Allow 3–4 days.",sources:[{type:"ig",label:"São Paulo post",url:"https://www.instagram.com/p/DWusZ0MjpXd/"},{type:"tt",label:"2-week itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"},{type:"yt",label:"Ultimate São Paulo Guide",url:"https://www.youtube.com/watch?v=n1NjYE2qmzM"}]},
-  {id:'iguazu',name:"Iguazu Falls",category:"place",location:"Foz do Iguaçu, Paraná",julyTip:true,description:"One of the world's greatest natural wonders — photos don't do it justice. Brazilian side: panoramic views. Argentine side: walk through the mist. Fly from Rio. Allow 2 full days. July: dry season, clear skies, but still powerful flows.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"},{type:"yt",label:"18 Best Places in Brazil",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
-  {id:'amazon',name:"Amazon Jungle — Manaus",category:"place",location:"Amazonas",julyTip:true,description:"Min 4 days/3 nights. Activities: night caiman spotting, piranha fishing, jungle treks, flooded forest canoe, river sunsets, medicinal plants. Pack: strong repellent, loose clothes, dry bag, powerbank, flashlight. July: water levels falling — great for wildlife spotting.",sources:[{type:"ig",label:"Amazon 4-day guide",url:"https://www.instagram.com/p/DWY2fA8COI0/"},{type:"tt",label:"Brazil bucket list pt2",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"},{type:"yt",label:"18 Best Places in Brazil",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
-  {id:'meeting-waters',name:"Meeting of the Waters",category:"place",location:"Manaus, Amazonas",description:"Rio Negro (black) meets Amazon (sandy-brown) — rivers flow side by side for 6km without mixing. One of nature's most surreal phenomena. From Manaus by boat. Often combined with Indigenous village visits and pink dolphin spotting.",sources:[{type:"ig",label:"Meeting of waters",url:"https://www.instagram.com/p/DVoOWcaEXmt/"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"}]},
-  {id:'lencois',name:"Lençóis Maranhenses",category:"place",location:"Maranhão",julyTip:true,description:"Sand dunes with freshwater lagoons — one of the most otherworldly landscapes on Earth. Fly to Barreirinhas, then 4WD tour. July is PEAK season — lagoons full after rainy season. Book everything months in advance.",sources:[{type:"yt",label:"Lençóis Maranhenses guide",url:"https://www.youtube.com/watch?v=QnlZ7sZxoi8"}]},
-  {id:'pantanal',name:"Pantanal",category:"place",location:"Mato Grosso do Sul",julyTip:true,description:"Best place in South America for wildlife. Jaguars, giant river otters, capybaras. July is DRY SEASON — absolutely the best time to visit. Wildlife concentrates around water. SouthWild Pantanal Lodge is top-rated.",sources:[{type:"tt",label:"Beyond Rio",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"},{type:"yt",label:"18 Best Places",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
-  {id:'bonito',name:"Bonito",category:"place",location:"Mato Grosso do Sul",julyTip:true,description:"Crystal-clear rivers, snorkeling with hundreds of fish. Rio da Prata and Baía Bonita are standout experiences. Very controlled eco-tourism — book MONTHS ahead, especially for July. Spots fill up fast.",sources:[{type:"tt",label:"Beyond Rio spots",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"}]},
-  {id:'jalapao',name:"Jalapeão",category:"place",location:"Tocantins",description:"Hidden gem bigger than many European countries — virtually no foreign tourists. Fervedouros (natural springs you float in), red sand dunes, canyons. Off the beaten path. Requires renting a 4WD.",sources:[{type:"tt",label:"Hidden Jalapeão",url:"https://www.tiktok.com/@laly_belulle/video/7555548376943774998"}]},
-  {id:'bombinhas',name:"Bombinhas Peninsula",category:"place",location:"Santa Catarina",description:"Mirante Eco 360° has sweeping views of Zimbros Bay. Praia da Tainha west-facing for sunsets. Protected and largely undeveloped — genuinely unspoiled. Great for a scenic detour.",sources:[{type:"ig",label:"Santa Catarina views",url:"https://www.instagram.com/p/DWvs2iLjsxB/"},{type:"ig",label:"Sunset at Tainha",url:"https://www.instagram.com/p/DWuXRKUj-VU/"}]},
-  {id:'miramar-windsor',name:"Miramar by Windsor Copacabana",category:"stay",location:"Rio de Janeiro",description:"Budget-smart hotel on the Copacabana strip. Strategy: stay here (good value), then Uber to Ipanema/Leblon for the day. Well-located for all major attractions.",sources:[{type:"ig",label:"Rio hotel tip",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"}]},
-  {id:'grand-hyatt',name:"Grand Hyatt Rio de Janeiro",category:"stay",location:"Rio de Janeiro",description:"Quiet luxury beach vibes further from tourist crowds. Good for a splurge night or two. Arena Leme Hotel is the more budget-friendly in-the-mix alternative.",sources:[{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
-  {id:'picinguaba',name:"Pousada Picinguaba",category:"stay",location:"São Paulo coast",description:"Boutique eco-hotel in Atlantic Forest. Organic ingredients, just-caught seafood. Lunch with ocean views, dinner under stars. Farm-to-table and sea-to-plate philosophy. One of Brazil's most special stays.",sources:[{type:"ig",label:"Picinguaba post",url:"https://www.instagram.com/p/DWwkt9yEgG8/"}]},
-  {id:'rosewood-sp',name:"Rosewood São Paulo",category:"stay",location:"São Paulo",description:"Century-old maternity hospital redesigned by Jean Nouvel — brutalist concrete meets tropical gardens. One of South America's most architecturally extraordinary luxury hotels.",sources:[{type:"ig",label:"Rosewood review",url:"https://www.instagram.com/p/DWuoC6aD7-8/"}]},
-  {id:'barra-ap204',name:"Apartment 204 Barra — Salvador",category:"stay",location:"Salvador, Bahia",description:"Rooftop pool with city+ocean views, sauna, gym, elegant shared spaces. Barra neighborhood — 5 min to beach. From 3-night minimum. Good for a group stay.",sources:[{type:"ig",label:"Salvador Airbnb",url:"https://www.instagram.com/p/DWubMf5jmSh/"}]},
-  {id:'amazon-lodge',name:"Amazon Jungle Lodge (from Manaus)",category:"stay",location:"Amazonas",description:"All-inclusive jungle lodge packages from Manaus. Fresh regional meals included. WiFi + AC but expect daily power cuts. @amazonbraziljungle.tourr highly recommended.",sources:[{type:"ig",label:"Amazon 4-day guide",url:"https://www.instagram.com/p/DWY2fA8COI0/"}]},
-  {id:'fogo-chao',name:"Fogo de Chão — Churrasco",category:"food",location:"Multiple cities",description:"The definitive Brazilian steakhouse experience — all-you-can-eat churrasco with tableside meat service. Available in Rio, São Paulo, and other major cities. Non-negotiable for a Brazil trip.",sources:[{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
-  {id:'acaraje',name:"Acarajé in Salvador",category:"food",location:"Salvador, Bahia",description:"Deep-fried black-eyed pea fritters with vatapá filling, sold by Bahianas in traditional white dress. An Afro-Brazilian street food icon. Get it from Dinha in Rio Vermelho — the most authentic in the city.",sources:[{type:"yt",label:"10 Best Places in Salvador",url:"https://www.youtube.com/watch?v=3Qe4iVpyeso"}]},
-  {id:'seafood-picinguaba',name:"Seafood at Picinguaba",category:"food",location:"São Paulo coast",description:"Just-caught fish, organic produce, farm-to-table. 'Sea to plate isn't a trend here, it's just life.' Lunch with ocean views at Pousada Picinguaba. One of the freshest meals you'll have in Brazil.",sources:[{type:"ig",label:"Picinguaba seafood",url:"https://www.instagram.com/p/DWwkt9yEgG8/"}]},
-  {id:'amazonian-cuisine',name:"Amazonian Cuisine",category:"food",location:"Amazon region",description:"Unique flavors — tucunaré fish, açaí straight from source, cupuaçu. Gastrobrazil.com and atable.br offer curated food tours connecting you with indigenous Brazilian ingredients.",sources:[{type:"ig",label:"Gastro Brazil",url:"https://www.instagram.com/p/DWuPGQ7D4Dg/"}]},
-  {id:'havaianas-flagship',name:"Havaianas Flagship Ipanema",category:"food",location:"Rio de Janeiro",description:"Three-floor store with every color + custom options. Significantly cheaper than abroad. The definitive place to buy authentic Havaianas. Also check out Farm Rio (30–50% cheaper than US prices) nearby.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
-  {id:'natura',name:"Natura Beauty Products",category:"food",location:"Rio de Janeiro / Brazil",description:"The Natura seve vanilla body oil is a must-buy Brazil staple. Brazilian beauty products significantly cheaper than abroad. Widely available across Rio.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
-  {id:'evisa',name:"Brazilian eVisa — Get It First",category:"other",location:"Before you go",description:"Required for most international visitors. Apply when you book your flight — can take time. About $80 USD, valid for 10 years. MULTIPLE TikTok creators flag this as the #1 logistical tip. Don't leave it to the last minute.",sources:[{type:"tt",label:"eVisa tip",url:"https://www.tiktok.com/@mercedes.beverly/video/7592129346589052174"},{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
-  {id:'safety-rio',name:"Safety in Rio — What NOT to Bring",category:"other",location:"Rio de Janeiro",description:"Don't wear expensive jewelry/watches. Keep your good phone inside — use an old or cheap one. Carry only the cash you need. Uber is safe and recommended over taxis. Be aware in busy tourist areas at night.",sources:[{type:"tt",label:"What NOT to bring",url:"https://www.tiktok.com/@luluvess/video/7602393283888745730"},{type:"tt",label:"5 safety tips",url:"https://www.tiktok.com/@itsimplyeve/video/7285472588908727584"},{type:"yt",label:"What tourists should know",url:"https://www.youtube.com/watch?v=NXtnHGvhIQg"}]},
-  {id:'one-carioca',name:"One Carioca Day (Rio Experiences)",category:"other",location:"Rio de Janeiro",description:"Local operator for unique Rio: altinha football lessons, Morro Dois Irmãos sunrise hike, waterfall treks, Guanabara Bay boat tours, surf lessons. Great for active travelers who want more than sightseeing.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"}]},
-  {id:'gol-flight',name:"GOL Airlines NYC → Rio Direct",category:"other",location:"New York / Rio de Janeiro",description:"GOL is launching the first-ever nonstop flight between New York and Rio — a major change for US travelers to Brazil. Significantly cuts total travel time from the East Coast. Check for July availability.",sources:[{type:"ig",label:"GOL flight announcement",url:"https://www.instagram.com/p/DWuPS81CIA9/"}]},
-  {id:'carnival-samba',name:"Rio Carnival & Samba Culture",category:"other",location:"Rio de Janeiro",description:"No Carnival in July, but samba schools run throughout the year. Visit the Sambódromo for context. Lapa neighborhood on weekends has live samba clubs — authentic and electric.",sources:[{type:"ig",label:"Carnival champion post",url:"https://www.instagram.com/p/DWwY1uujX1X/"}]},
-  {id:'piranha-fishing',name:"Piranha Fishing (Amazon)",category:"other",location:"Amazonas",description:"A true jungle experience — less dangerous than they sound and hugely memorable. Part of most multi-day Amazon packages from Manaus. Usually paired with night caiman spotting.",sources:[{type:"ig",label:"Amazon tour",url:"https://www.instagram.com/p/DWY2fA8COI0/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
-  {id:'farm-rio-shopping',name:"Farm Rio & Rio Shopping",category:"other",location:"Rio de Janeiro",description:"Farm Rio flagship in Ipanema — 30–50% cheaper than US. Praça do Lido in Copacabana: handmade leather bags. Copacabana Night Market: jerseys, gifts. Saturday: Feira do Lavradio antiques market.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'christ-redeemer',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/658798628_18575352724015907_8198204230576723271_n.jpg?stp=dst-jpg_e35_s1080x1080_sh2.08_tt6&_nc_cat=103&ig_cache_key=Mzg2ODc1OTI0NTA5ODEyODkyNQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTA4MC5zZHIuQzMifQ%3D%3D&_nc_ohc=NQT8kaXMIxQQ7kNvwGu3NCt&oh=00_Af1cXw8hWNd3FmvchC1eqJS-j8snT9NjPlMNp5D8BNLcaw&oe=69D89173", "credit": "Instagram"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Christ_the_Redeemer_-_Cristo_Redentor.jpg/800px-Christ_the_Redeemer_-_Cristo_Redentor.jpg", "credit": "Wikimedia Commons"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Corcovado_jesus.jpg/600px-Corcovado_jesus.jpg", "credit": "Wikimedia Commons"}],name:"Christ the Redeemer",category:"place",location:"Rio de Janeiro",julyTip:true,description:"One of the New Seven Wonders of the World atop Corcovado mountain. Go before 8am to beat crowds. Helicopter tour gives the best aerial views (~$80/person). About $18 USD entry via the Corcovado cog train. In July: mornings can be misty — aim for 10am–2pm for clearest views.",sources:[{type:"ig",label:"Rio mini guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Know before you go + prices",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
+  {id:'sugarloaf',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/659639450_18414707704131648_8638013334704496871_n.jpg?stp=dst-jpegr_e35_p1080x1080_tt6&_nc_cat=109&ig_cache_key=Mzg2ODc4NjYwMzgxMjgwNzgzMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af1DCk2xtLsu9DhxsyKxYzA_5tDBZs2Zq657wpgZD6wZeQ&oe=69D87F29", "credit": "Instagram"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Aerial_view_of_Rio_de_Janeiro%2C_Brazil_LCCN2016633262_%28cropped%29.tif/lossy-page1-800px-Aerial_view_of_Rio_de_Janeiro%2C_Brazil_LCCN2016633262_%28cropped%29.tif.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1518639192441-8fce0a366e2e?w=800&q=85", "credit": "Unsplash"}],name:"Sugarloaf Mountain",category:"place",location:"Rio de Janeiro",description:"Best at sunset or on a clear day — go earlier for fewer crowds. ~$45 USD entry. Second cable car from Morro da Urca gives the best panoramic Rio view. Free viewpoint at the base (Mirante do Pão de Açúcar) is also stunning.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWwsOsgDWSX/"},{type:"tt",label:"Prices & tips",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
+  {id:'mirante-dona-marta',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/658531259_17993305124946952_3759338825602235991_n.jpg?stp=dst-jpegr_e35_p1080x1080_tt6&_nc_cat=110&ig_cache_key=Mzg2Nzk4MDUyMDU3NTgyMzQwOQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af0a0AJh3XjFOlNPGlcKj7MxqdfWY2pYOGJZbLQ_MJ6WWg&oe=69D87B83", "credit": "Instagram @vacaywithej"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1624718951050-39f4f75b5c4b?w=800&q=85", "credit": "Unsplash"}],name:"Mirante Dona Marta",category:"place",location:"Rio de Janeiro",description:"Best FREE sunset viewpoint in Rio — no entrance fee, rarely crowded. Christ the Redeemer on one side, Sugarloaf on the other. Easy Uber ride. One of the most genuinely unmissable spots that most tourists skip.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWt1KDnDWUz/"}]},
+  {id:'ipanema',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/659895611_18351889747300384_3324856842804271383_n.jpg?stp=dst-jpg_e35_p1080x1080_sh2.08_tt6&_nc_cat=107&ig_cache_key=Mzg2ODY5NzQwNzAwNTQ0MTgyNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af0nBVql27XCZGf76Xfq4qfXVGXaFEI4cMn3dzLVq7f6ww&oe=69D887C4", "credit": "Instagram @jazminangelique"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ipanema_beach_in_Rio_de_Janeiro.jpg/800px-Ipanema_beach_in_Rio_de_Janeiro.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1561901426-bc70180a0c1e?w=800&q=85", "credit": "Unsplash"}],name:"Ipanema & Leblon Beaches",category:"place",location:"Rio de Janeiro",julyTip:true,description:"More local-feeling than Copacabana. Bring cash for beach vendors. Ipanema Hippie Market on Sundays: food, art, vintage vinyl. In July: water is cooler (~22°C) but beach culture is very much alive. Perfect for morning walks.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Shopping guide",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'copacabana',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/659895611_18351889747300384_3324856842804271383_n.jpg?stp=dst-jpg_e35_p1080x1080_sh2.08_tt6&_nc_cat=107&ig_cache_key=Mzg2ODY5NzQwNzAwNTQ0MTgyNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af0nBVql27XCZGf76Xfq4qfXVGXaFEI4cMn3dzLVq7f6ww&oe=69D887C4", "credit": "Instagram"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Copacabana_beach_in_Rio_de_Janeiro.jpg/800px-Copacabana_beach_in_Rio_de_Janeiro.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1544989164-b7f53b9b4c80?w=800&q=85", "credit": "Unsplash"}],name:"Copacabana Beach & Night Market",category:"place",location:"Rio de Janeiro",description:"Iconic promenade — good base for accommodation (then Uber to Ipanema). Night market has Brazil jerseys, jewelry, gifts. New Year's Eve here is legendary. Praia Vermelha nearby is quieter.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'selarun',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/659895611_18351889747300384_3324856842804271383_n.jpg?stp=dst-jpg_e35_p1080x1080_sh2.08_tt6&_nc_cat=107&ig_cache_key=Mzg2ODY5NzQwNzAwNTQ0MTgyNw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af0nBVql27XCZGf76Xfq4qfXVGXaFEI4cMn3dzLVq7f6ww&oe=69D887C4", "credit": "Instagram"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Selaron_1.jpg/600px-Selaron_1.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=800&q=85", "credit": "Unsplash"}],name:"Escadaria Selarón",category:"place",location:"Rio de Janeiro / Lapa",description:"Mosaic staircase with tiles from 60+ countries. Best early morning before crowds. Free. Head to Santa Teresa neighborhood after for cafés and galleries. Lopa Art Café (Loja Patuá) is a beautiful nearby stop.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Know before you go",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
+  {id:'pedra-telegrafo',photo:'https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?w=600&q=80',name:"Pedra do Telégrafo",category:"place",location:"Rio de Janeiro",description:"Dramatic cliffside hike with stunning ocean views. Popular for dramatic photos. Go early. Can combine with a full Rio day including Cristo and Sugarloaf.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWteROamn2D/"}]},
+  {id:'tijuca',photo:'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=600&q=80',name:"Tijuca National Park",category:"place",location:"Rio de Janeiro",julyTip:true,description:"World's largest urban rainforest. Download AllTrails offline before going. Hike Pedra Bonita, Primatas Waterfall, Floresta da Tijuca. Free entry. July: dry season makes trails more accessible — good visibility and cooler temps for hiking.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"},{type:"tt",label:"Prices guide",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
+  {id:'morro-dois-irmaos',photo:'https://images.unsplash.com/photo-1500529786824-e00011e33ddd?w=600&q=80',name:"Morro Dois Irmãos",category:"place",location:"Rio de Janeiro",description:"Iconic sunrise hike — panoramic views over Ipanema and the Atlantic. One of the most recommended active experiences in Rio. Best combined with breakfast in Ipanema afterward.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
+  {id:'hang-glide',photo:'https://images.unsplash.com/photo-1463852247062-1bbca38f7805?w=600&q=80',name:"Hang Gliding over Rio",category:"place",location:"Rio de Janeiro",description:"Described across TikTok as 'the best view in the city, hands down'. Tandem gliding launches from Pedra Bonita, lands on the beach. Multiple operators — book in advance. One of the most memorable Rio experiences.",sources:[{type:"tt",label:"Rio guide you wish you had",url:"https://www.tiktok.com/@calumtravels/video/7598552511930305800"},{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
+  {id:'rio-rooftops',photo:'https://images.unsplash.com/photo-1567395880588-30462b0e21be?w=600&q=80',name:"Rio Rooftop Bars",category:"place",location:"Rio de Janeiro",description:"Top 5: 1. Sky Leme, 2. Bar Laje, 3. Classico Beach Club, 4. Isabel Lounge, 5. Sky Lab. Smart-casual dress. Best for sunset drinks with sweeping city views — perfect for a group evening.",sources:[{type:"tt",label:"5 Rio rooftops",url:"https://www.tiktok.com/@the_rooftopguide/video/7576748413136440598"}]},
+  {id:'gabinete-leitura',photo:'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80',name:"Gabinete de Leitura",category:"place",location:"Rio de Janeiro",description:"One of the most beautiful libraries/museums in Brazil — a hidden gem most tourists miss. Stunning neo-Gothic interior. Don't leave Rio without a stop here.",sources:[{type:"tt",label:"Hidden gem library",url:"https://www.tiktok.com/@postcardsfromayana/video/7590067195464420622"}]},
+  {id:'gloria-market',photo:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80',name:"Glória Sunday Market",category:"place",location:"Rio de Janeiro",description:"Local Sunday market with food, music, culture, and real community energy. Much less touristy than Selarón. Feira de Hippie in Ipanema also runs Sundays — vintage vinyl, food, art.",sources:[{type:"tt",label:"Rio guide",url:"https://www.tiktok.com/@calumtravels/video/7598552511930305800"}]},
+  {id:'rocinha',photo:'https://images.unsplash.com/photo-1518639192441-8fce0a366e2e?w=600&q=80',name:"Rocinha Favela Tour",category:"place",location:"Rio de Janeiro",description:"Rio's largest favela. Go with a LOCAL guide — not a bus tour. Gives real cultural context on history, urban planning, and community life. 'Be a Local' tours recommended. Vibrant culture and resilience.",sources:[{type:"tt",label:"Rocinha explained",url:"https://www.tiktok.com/@real.estates/video/7509476776700054814"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"}]},
+  {id:'museu-amanha',photo:'https://images.unsplash.com/photo-1574236170880-0bcd8c6e2a7b?w=600&q=80',name:"Museu do Amanhã & MAR",category:"place",location:"Rio de Janeiro",description:"Futuristic architecture on the revitalized port waterfront. Museu de Arte do Rio (MAR) is steps away with Brazilian art and social history. Half-day minimum. Great indoor option for a rainy July day.",sources:[{type:"tt",label:"2-week Brazil itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"}]},
+  {id:'ilha-grande',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Ilha_Grande_-_panoramio.jpg/800px-Ilha_Grande_-_panoramio.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=85", "credit": "Unsplash"}],name:"Ilha Grande",category:"place",location:"Rio de Janeiro state",julyTip:true,description:"Car-free island — no motorized vehicles allowed. Pristine beaches and jungle trails. Recommended for a weekend trip from Rio. July: ideal conditions — dry, cooler weather, good for hiking across the island.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Brazil spots",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"}]},
+  {id:'paraty',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/661996436_18105045751910790_1587683114856629367_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ig_cache_key=Mzg2ODEzMTQ2NDM0MTA4NzU3Mg%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af0RR4dL9tURGp6m0mezniFmmk5wtHW7CH0L-e3RLyGi-g&oe=69D88C2E", "credit": "Instagram"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Paraty_-_RJ_-_Brasil.jpg/800px-Paraty_-_RJ_-_Brasil.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1598515213692-b1c1b3d05024?w=800&q=85", "credit": "Unsplash"}],name:"Paraty",category:"place",location:"Rio de Janeiro state",julyTip:true,description:"UNESCO-listed colonial Portuguese town — cobblestone streets, jungle, and sea. Bus from São Paulo is comfortable. Highlights: Centro Histórico, boat trip to Lagoa Azul, Cachoeira do Tobogã. Recommend 3–5 days. July: dry season and mild weather = perfect.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"2-week Brazil itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"}]},
+  {id:'arraial-buzios',photo:'https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/658663449_18586451587011734_4979495730142507729_n.jpg?stp=dst-jpg_e35_p1080x1080_sh2.08_tt6&_nc_cat=105&ig_cache_key=Mzg2ODY3MDE3NTg3MjgxMzU5NA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTkyMC5zZHIuQzMifQ%3D%3D&_nc_ohc=FEhCPW1joDcQ7kNvwGxz0rC&_nc_oc=AdqMshG7Bek_Lkjo02b6UAAfmo8ZBUUz8UkGkCY_QoqXEPy13S4nwRzsAZYqriQIGVk&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-vie1-1.cdninstagram.com&_nc_gid=gD4xIbtTXpj5vOQ5ttZkIw&_nc_ss=7a3ba&oh=00_Af3adrqWQzb8sbyBWFXv4oInaawjRT-OZDZakRWo1UWBdg&oe=69D88B4D',name:"Arraial do Cabo & Búzios",category:"place",location:"Rio de Janeiro state",description:"Arraial: crystal-clear turquoise water — 'Caribbean of Brazil'. Búzios: charming peninsula with beaches and nightlife. Both are great day trips from Rio (2–3hr drive) or extend to a weekend.",sources:[{type:"ig",label:"Rio mini guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"}]},
+  {id:'salvador',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/658833814_18049223711535683_3123010010334187656_n.webp?stp=dst-webp_s1080x1080_sh2.08&_nc_cat=105&ig_cache_key=Mzg2ODcwMTMyNTMzMjkzODA3MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af0M7Bgu8_LEzt7cSLouh3vZi2i0yqK8KmuBkAokMEWF0Q&oe=69D89AD3", "credit": "Instagram"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Pelourinho2009.jpg/600px-Pelourinho2009.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1612538498456-e861df91d4d0?w=800&q=85", "credit": "Unsplash"}],name:"Salvador de Bahia",category:"place",location:"Bahia",description:"Soul of Brazil — shaped by Afro-Brazilian heritage. Pelourinho district: UNESCO World Heritage, colorful colonial streets, Olodum drums Tuesday nights. Museu Afro-Brasileiro is unmissable. Brazil's first capital.",sources:[{type:"ig",label:"Salvador post",url:"https://www.instagram.com/p/DWwmBd_jRnO/"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"},{type:"yt",label:"10 Best Places in Salvador 2026",url:"https://www.youtube.com/watch?v=3Qe4iVpyeso"}]},
+  {id:'itacare',photo:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80',name:"Itacaré",category:"place",location:"Bahia",description:"Beach town with excellent surf, Atlantic Forest trails to beaches, and laid-back vibe. Book accommodation well in advance. Midweek is quieter. Multiple beaches reachable via jungle trails.",sources:[{type:"ig",label:"Itacaré guide",url:"https://www.instagram.com/p/DWtKaXpjTOH/"}]},
+  {id:'sao-paulo',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Sao_paulo_central.jpg/800px-Sao_paulo_central.jpg", "credit": "Wikimedia Commons"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/MASP_-_Museu_de_Arte_de_S%C3%A3o_Paulo.jpg/800px-MASP_-_Museu_de_Arte_de_S%C3%A3o_Paulo.jpg", "credit": "Wikimedia Commons (MASP)"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&q=85", "credit": "Unsplash"}],name:"São Paulo",category:"place",location:"São Paulo",description:"Brazil's cultural capital — top-tier museums, galleries, restaurants. MASP on Paulista Avenue (free Tuesdays). Parque Ibirapuera for green space. Best neighborhoods: Vila Madalena (street art), Pinheiros, Liberdade (Japanese-Brazilian). Allow 3–4 days.",sources:[{type:"ig",label:"São Paulo post",url:"https://www.instagram.com/p/DWusZ0MjpXd/"},{type:"tt",label:"2-week itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"},{type:"yt",label:"Ultimate São Paulo Guide",url:"https://www.youtube.com/watch?v=n1NjYE2qmzM"}]},
+  {id:'iguazu',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Iguazu_Argentina_Panorama.jpg/800px-Iguazu_Argentina_Panorama.jpg", "credit": "Wikimedia Commons"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/IguazuFalls-Argentina-EWH.jpg/800px-IguazuFalls-Argentina-EWH.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1547652577-0db2c86ed685?w=800&q=85", "credit": "Unsplash"}],name:"Iguazu Falls",category:"place",location:"Foz do Iguaçu, Paraná",julyTip:true,description:"One of the world's greatest natural wonders — photos don't do it justice. Brazilian side: panoramic views. Argentine side: walk through the mist. Fly from Rio. Allow 2 full days. July: dry season, clear skies, but still powerful flows.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"},{type:"yt",label:"18 Best Places in Brazil",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
+  {id:'amazon',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Amazon_river.jpg/800px-Amazon_river.jpg", "credit": "Wikimedia Commons"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Amazon_jungle.jpg/800px-Amazon_jungle.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1518457607834-6e8d80c183c5?w=800&q=85", "credit": "Unsplash"}],name:"Amazon Jungle — Manaus",category:"place",location:"Amazonas",julyTip:true,description:"Min 4 days/3 nights. Activities: night caiman spotting, piranha fishing, jungle treks, flooded forest canoe, river sunsets, medicinal plants. Pack: strong repellent, loose clothes, dry bag, powerbank, flashlight. July: water levels falling — great for wildlife spotting.",sources:[{type:"ig",label:"Amazon 4-day guide",url:"https://www.instagram.com/p/DWY2fA8COI0/"},{type:"tt",label:"Brazil bucket list pt2",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"},{type:"yt",label:"18 Best Places in Brazil",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
+  {id:'meeting-waters',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Encontro_das_%C3%A1guas.jpg/800px-Encontro_das_%C3%A1guas.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1601001435957-74f696e0ffd3?w=800&q=85", "credit": "Unsplash"}],name:"Meeting of the Waters",category:"place",location:"Manaus, Amazonas",description:"Rio Negro (black) meets Amazon (sandy-brown) — rivers flow side by side for 6km without mixing. One of nature's most surreal phenomena. From Manaus by boat. Often combined with Indigenous village visits and pink dolphin spotting.",sources:[{type:"ig",label:"Meeting of waters",url:"https://www.instagram.com/p/DVoOWcaEXmt/"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"}]},
+  {id:'lencois',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Len%C3%A7%C3%B3is_Maranhenses_National_Park.jpg/800px-Len%C3%A7%C3%B3is_Maranhenses_National_Park.jpg", "credit": "Wikimedia Commons"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lagoa_Azul.jpg/800px-Lagoa_Azul.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=800&q=85", "credit": "Unsplash"}],name:"Lençóis Maranhenses",category:"place",location:"Maranhão",julyTip:true,description:"Sand dunes with freshwater lagoons — one of the most otherworldly landscapes on Earth. Fly to Barreirinhas, then 4WD tour. July is PEAK season — lagoons full after rainy season. Book everything months in advance.",sources:[{type:"yt",label:"Lençóis Maranhenses guide",url:"https://www.youtube.com/watch?v=QnlZ7sZxoi8"}]},
+  {id:'pantanal',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Jaguar_%28Panthera_onca%29_Luc_Viatour.jpg/800px-Jaguar_%28Panthera_onca%29_Luc_Viatour.jpg", "credit": "Wikimedia Commons"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Pantanal_sunset.jpg/800px-Pantanal_sunset.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=800&q=85", "credit": "Unsplash"}],name:"Pantanal",category:"place",location:"Mato Grosso do Sul",julyTip:true,description:"Best place in South America for wildlife. Jaguars, giant river otters, capybaras. July is DRY SEASON — absolutely the best time to visit. Wildlife concentrates around water. SouthWild Pantanal Lodge is top-rated.",sources:[{type:"tt",label:"Beyond Rio",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"},{type:"yt",label:"18 Best Places",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
+  {id:'bonito',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Bonito_MS.jpg/800px-Bonito_MS.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1585000165059-a0cf7e525e20?w=800&q=85", "credit": "Unsplash"}],name:"Bonito",category:"place",location:"Mato Grosso do Sul",julyTip:true,description:"Crystal-clear rivers, snorkeling with hundreds of fish. Rio da Prata and Baía Bonita are standout experiences. Very controlled eco-tourism — book MONTHS ahead, especially for July. Spots fill up fast.",sources:[{type:"tt",label:"Beyond Rio spots",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"}]},
+  {id:'jalapao',photo:'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80',name:"Jalapeão",category:"place",location:"Tocantins",description:"Hidden gem bigger than many European countries — virtually no foreign tourists. Fervedouros (natural springs you float in), red sand dunes, canyons. Off the beaten path. Requires renting a 4WD.",sources:[{type:"tt",label:"Hidden Jalapeão",url:"https://www.tiktok.com/@laly_belulle/video/7555548376943774998"}]},
+  {id:'bombinhas',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/658791047_18105088402910790_1864392402434760136_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=110&ig_cache_key=Mzg2ODUwNzg2NjUzMzkwNzUyMQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af054qEy6r8VFcoqfHjad0Ke8XyaYv9Kds_Lqb9AGkG9-A&oe=69D88DEE", "credit": "Instagram @andre.martins.photographs"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=85", "credit": "Unsplash"}],name:"Bombinhas Peninsula",category:"place",location:"Santa Catarina",description:"Mirante Eco 360° has sweeping views of Zimbros Bay. Praia da Tainha west-facing for sunsets. Protected and largely undeveloped — genuinely unspoiled. Great for a scenic detour.",sources:[{type:"ig",label:"Santa Catarina views",url:"https://www.instagram.com/p/DWvs2iLjsxB/"},{type:"ig",label:"Sunset at Tainha",url:"https://www.instagram.com/p/DWuXRKUj-VU/"}]},
+  {id:'miramar-windsor',photo:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80',name:"Miramar by Windsor Copacabana",category:"stay",location:"Rio de Janeiro",description:"Budget-smart hotel on the Copacabana strip. Strategy: stay here (good value), then Uber to Ipanema/Leblon for the day. Well-located for all major attractions.",sources:[{type:"ig",label:"Rio hotel tip",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"}]},
+  {id:'grand-hyatt',photo:'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80',name:"Grand Hyatt Rio de Janeiro",category:"stay",location:"Rio de Janeiro",description:"Quiet luxury beach vibes further from tourist crowds. Good for a splurge night or two. Arena Leme Hotel is the more budget-friendly in-the-mix alternative.",sources:[{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
+  {id:'picinguaba',photos:[{"src": "unsplash", "url": "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?w=800&q=85", "credit": "Unsplash"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=85", "credit": "Unsplash"}],name:"Pousada Picinguaba",category:"stay",location:"São Paulo coast",description:"Boutique eco-hotel in Atlantic Forest. Organic ingredients, just-caught seafood. Lunch with ocean views, dinner under stars. Farm-to-table and sea-to-plate philosophy. One of Brazil's most special stays.",sources:[{type:"ig",label:"Picinguaba post",url:"https://www.instagram.com/p/DWwkt9yEgG8/"}]},
+  {id:'rosewood-sp',photos:[{"src": "unsplash", "url": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=85", "credit": "Unsplash"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=85", "credit": "Unsplash"}],name:"Rosewood São Paulo",category:"stay",location:"São Paulo",description:"Century-old maternity hospital redesigned by Jean Nouvel — brutalist concrete meets tropical gardens. One of South America's most architecturally extraordinary luxury hotels.",sources:[{type:"ig",label:"Rosewood review",url:"https://www.instagram.com/p/DWuoC6aD7-8/"}]},
+  {id:'barra-ap204',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/660123119_18075739706228213_7242246768767858210_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=Mzg2ODAyOTk4MTcyMTMxMTE4Nw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af2vYQVljlm08MAfMdHecL1HtgOWmnKkkRCj6GPfwo-GCA&oe=69D89852", "credit": "Instagram \u2014 Barra Premium Salvador"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=85", "credit": "Unsplash"}],name:"Apartment 204 Barra — Salvador",category:"stay",location:"Salvador, Bahia",description:"Rooftop pool with city+ocean views, sauna, gym, elegant shared spaces. Barra neighborhood — 5 min to beach. From 3-night minimum. Good for a group stay.",sources:[{type:"ig",label:"Salvador Airbnb",url:"https://www.instagram.com/p/DWubMf5jmSh/"}]},
+  {id:'amazon-lodge',photo:'https://images.unsplash.com/photo-1518457607834-6e8d80c183c5?w=600&q=80',name:"Amazon Jungle Lodge (from Manaus)",category:"stay",location:"Amazonas",description:"All-inclusive jungle lodge packages from Manaus. Fresh regional meals included. WiFi + AC but expect daily power cuts. @amazonbraziljungle.tourr highly recommended.",sources:[{type:"ig",label:"Amazon 4-day guide",url:"https://www.instagram.com/p/DWY2fA8COI0/"}]},
+  {id:'fogo-chao',photos:[{"src": "unsplash", "url": "https://images.unsplash.com/photo-1558030006-450675393462?w=800&q=85", "credit": "Unsplash"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=85", "credit": "Unsplash"}],name:"Fogo de Chão — Churrasco",category:"food",location:"Multiple cities",description:"The definitive Brazilian steakhouse experience — all-you-can-eat churrasco with tableside meat service. Available in Rio, São Paulo, and other major cities. Non-negotiable for a Brazil trip.",sources:[{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
+  {id:'acaraje',photos:[{"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Acaraje_01.jpg/600px-Acaraje_01.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=85", "credit": "Unsplash"}],name:"Acarajé in Salvador",category:"food",location:"Salvador, Bahia",description:"Deep-fried black-eyed pea fritters with vatapá filling, sold by Bahianas in traditional white dress. An Afro-Brazilian street food icon. Get it from Dinha in Rio Vermelho — the most authentic in the city.",sources:[{type:"yt",label:"10 Best Places in Salvador",url:"https://www.youtube.com/watch?v=3Qe4iVpyeso"}]},
+  {id:'seafood-picinguaba',photo:'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=600&q=80',name:"Seafood at Picinguaba",category:"food",location:"São Paulo coast",description:"Just-caught fish, organic produce, farm-to-table. 'Sea to plate isn't a trend here, it's just life.' Lunch with ocean views at Pousada Picinguaba. One of the freshest meals you'll have in Brazil.",sources:[{type:"ig",label:"Picinguaba seafood",url:"https://www.instagram.com/p/DWwkt9yEgG8/"}]},
+  {id:'amazonian-cuisine',photo:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80',name:"Amazonian Cuisine",category:"food",location:"Amazon region",description:"Unique flavors — tucunaré fish, açaí straight from source, cupuaçu. Gastrobrazil.com and atable.br offer curated food tours connecting you with indigenous Brazilian ingredients.",sources:[{type:"ig",label:"Gastro Brazil",url:"https://www.instagram.com/p/DWuPGQ7D4Dg/"}]},
+  {id:'havaianas-flagship',photo:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80',name:"Havaianas Flagship Ipanema",category:"food",location:"Rio de Janeiro",description:"Three-floor store with every color + custom options. Significantly cheaper than abroad. The definitive place to buy authentic Havaianas. Also check out Farm Rio (30–50% cheaper than US prices) nearby.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'natura',photo:'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&q=80',name:"Natura Beauty Products",category:"food",location:"Rio de Janeiro / Brazil",description:"The Natura seve vanilla body oil is a must-buy Brazil staple. Brazilian beauty products significantly cheaper than abroad. Widely available across Rio.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'evisa',photo:'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80',name:"Brazilian eVisa — Get It First",category:"other",location:"Before you go",description:"Required for most international visitors. Apply when you book your flight — can take time. About $80 USD, valid for 10 years. MULTIPLE TikTok creators flag this as the #1 logistical tip. Don't leave it to the last minute.",sources:[{type:"tt",label:"eVisa tip",url:"https://www.tiktok.com/@mercedes.beverly/video/7592129346589052174"},{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
+  {id:'safety-rio',photo:'https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?w=600&q=80',name:"Safety in Rio — What NOT to Bring",category:"other",location:"Rio de Janeiro",description:"Don't wear expensive jewelry/watches. Keep your good phone inside — use an old or cheap one. Carry only the cash you need. Uber is safe and recommended over taxis. Be aware in busy tourist areas at night.",sources:[{type:"tt",label:"What NOT to bring",url:"https://www.tiktok.com/@luluvess/video/7602393283888745730"},{type:"tt",label:"5 safety tips",url:"https://www.tiktok.com/@itsimplyeve/video/7285472588908727584"},{type:"yt",label:"What tourists should know",url:"https://www.youtube.com/watch?v=NXtnHGvhIQg"}]},
+  {id:'one-carioca',photo:'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80',name:"One Carioca Day (Rio Experiences)",category:"other",location:"Rio de Janeiro",description:"Local operator for unique Rio: altinha football lessons, Morro Dois Irmãos sunrise hike, waterfall treks, Guanabara Bay boat tours, surf lessons. Great for active travelers who want more than sightseeing.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"}]},
+  {id:'gol-flight',photo:'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80',name:"GOL Airlines NYC → Rio Direct",category:"other",location:"New York / Rio de Janeiro",description:"GOL is launching the first-ever nonstop flight between New York and Rio — a major change for US travelers to Brazil. Significantly cuts total travel time from the East Coast. Check for July availability.",sources:[{type:"ig",label:"GOL flight announcement",url:"https://www.instagram.com/p/DWuPS81CIA9/"}]},
+  {id:'carnival-samba',photos:[{"src": "ig", "url": "https://scontent-vie1-1.cdninstagram.com/v/t51.82787-15/658833814_18049223711535683_3123010010334187656_n.webp?stp=dst-webp_s1080x1080_sh2.08&_nc_cat=105&ig_cache_key=Mzg2ODcwMTMyNTMzMjkzODA3MQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&oh=00_Af0M7Bgu8_LEzt7cSLouh3vZi2i0yqK8KmuBkAokMEWF0Q&oe=69D89AD3", "credit": "Instagram @behindthesamba"}, {"src": "wiki", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Carnaval_2013_-_Rio_de_Janeiro_%288470931232%29.jpg/800px-Carnaval_2013_-_Rio_de_Janeiro_%288470931232%29.jpg", "credit": "Wikimedia Commons"}, {"src": "unsplash", "url": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=85", "credit": "Unsplash"}],name:"Rio Carnival & Samba Culture",category:"other",location:"Rio de Janeiro",description:"No Carnival in July, but samba schools run throughout the year. Visit the Sambódromo for context. Lapa neighborhood on weekends has live samba clubs — authentic and electric.",sources:[{type:"ig",label:"Carnival champion post",url:"https://www.instagram.com/p/DWwY1uujX1X/"}]},
+  {id:'piranha-fishing',photo:'https://images.unsplash.com/photo-1601001435957-74f696e0ffd3?w=600&q=80',name:"Piranha Fishing (Amazon)",category:"other",location:"Amazonas",description:"A true jungle experience — less dangerous than they sound and hugely memorable. Part of most multi-day Amazon packages from Manaus. Usually paired with night caiman spotting.",sources:[{type:"ig",label:"Amazon tour",url:"https://www.instagram.com/p/DWY2fA8COI0/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
+  {id:'farm-rio-shopping',photo:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80',name:"Farm Rio & Rio Shopping",category:"other",location:"Rio de Janeiro",description:"Farm Rio flagship in Ipanema — 30–50% cheaper than US. Praça do Lido in Copacabana: handmade leather bags. Copacabana Night Market: jerseys, gifts. Saturday: Feira do Lavradio antiques market.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
 ];
 
 // ═══════════════════════════════════════════
@@ -935,6 +986,8 @@ async function showApp() {
   renderPlanner();
   renderAdmin();
   startSyncPolling();
+  // Load Google Places photos if key is configured
+  setTimeout(enrichWithGooglePhotos, 1000);
 }
 
 // ═══════════════════════════════════════════
@@ -974,15 +1027,30 @@ function renderCards() {
   cl.innerHTML = filtered.map(d => {
     const v = votes[d.id]||0;
     const saved = saves.includes(d.id);
+    const photos = d.photos || (d.photo ? [{url:d.photo,src:'ig',credit:''}] : [{url:'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80',src:'unsplash',credit:''}]);
+    const hasMany = photos.length > 1;
+    const srcBadgeClass = {ig:'gallery-src-ig',wiki:'gallery-src-wiki',unsplash:'gallery-src-unsplash',google:'gallery-src-google'};
+    const slides = photos.map((p,i) => `
+      <div class="card-gallery-slide">
+        <img src="${p.url}" alt="${d.name}" loading="${i===0?'eager':'lazy'}" onerror="this.parentElement.style.background='var(--canopy)'">
+      </div>`).join('');
+    const dots = hasMany ? photos.map((_,i) => `<div class="gallery-dot${i===0?' active':''}" id="dot-${d.id}-${i}"></div>`).join('') : '';
     return `<div class="card cat-${d.category}" onclick="openModal('${d.id}')">
-      <div class="card-stripe"></div>
-      <div class="card-inner">
-        <div class="card-head">
-          <div class="card-name">${d.name}</div>
-          <div class="cat-dot"></div>
+      <div class="card-gallery" id="gal-${d.id}">
+        <div class="card-gallery-track" id="track-${d.id}">${slides}</div>
+        <div class="card-gallery-overlay"></div>
+        ${hasMany?`<div class="gallery-count">1 / ${photos.length}</div>`:''}
+        <span class="gallery-src-badge ${srcBadgeClass[photos[0].src]||'gallery-src-unsplash'}">${photos[0].src==='ig'?'📸 IG':photos[0].src==='wiki'?'🌐 Wiki':photos[0].src==='google'?'📍 Google':'📷'}</span>
+        ${hasMany?`<button class="gallery-nav prev" onclick="event.stopPropagation();galPrev('${d.id}',${photos.length})">‹</button><button class="gallery-nav next" onclick="event.stopPropagation();galNext('${d.id}',${photos.length})">›</button>`:''} 
+        <div class="card-gallery-dots">${dots}</div>
+        ${d.julyTip?'<div class="card-photo-july" style="position:absolute;top:10px;left:${hasMany?'50px':'10px'};background:rgba(229,184,64,.9);color:#1a1208;font-size:10px;font-weight:700;padding:4px 8px;border-radius:10px">☀️ July pick</div>':''}
+        <div class="card-photo-name" style="position:absolute;bottom:10px;left:12px;right:12px">
+          <h3 style="font-family:Fraunces,serif;font-size:17px;font-weight:700;color:#fff;line-height:1.2;text-shadow:0 1px 4px rgba(0,0,0,.4)">${d.name}</h3>
+          <div style="font-size:11px;color:rgba(255,255,255,.8);margin-top:2px">📍 ${d.location||''}</div>
         </div>
-        <div class="card-loc">📍 ${d.location||''}${d.julyTip?' · <span style="color:#2d7a4a;font-weight:600">☀️ July pick</span>':''}</div>
-        <div class="card-desc">${d.description.slice(0,130)}${d.description.length>130?'…':''}</div>
+      </div>
+      <div class="card-inner">
+        <div class="card-desc">${d.description.slice(0,120)}${d.description.length>120?'…':''}</div>
         <div class="card-footer">
           <div class="card-sources">${d.sources.slice(0,3).map(s=>`<span class="src-badge ${srcClass[s.type]}">${s.type.toUpperCase()}</span>`).join('')}</div>
           <div class="vote-row">
@@ -1008,7 +1076,29 @@ function openModal(id) {
   const saved = saves.includes(id);
   const voted = (votes[id+'_voters']||[]).includes(currentUser?.name);
 
-  document.getElementById('mAccent').style.background = catColors[d.category];
+  // Set modal photo gallery
+  const photos = d.photos || (d.photo ? [{url:d.photo,src:'ig',credit:''}] : null);
+  const mPhotoHeader = document.getElementById('mPhotoHeader');
+  if(photos && photos.length) {
+    const srcLabel = {ig:'📸 Instagram',wiki:'🌐 Wikimedia Commons',unsplash:'📷 Unsplash',google:'📍 Google Places'};
+    mPhotoHeader.style.display='block';
+    mPhotoHeader.innerHTML = `
+      <div class="modal-gallery" id="mgal">
+        <div class="modal-gallery-track" id="mtrack">
+          ${photos.map((p,i)=>`<div class="modal-gallery-slide"><img src="${p.url}" alt="${d.name}" loading="${i===0?'eager':'lazy'}"></div>`).join('')}
+        </div>
+        <div class="modal-gallery-overlay"></div>
+        ${photos.length>1?`<button class="gallery-nav prev" onclick="mGalPrev()">‹</button><button class="gallery-nav next" onclick="mGalNext()">›</button>`:''}
+        <div class="modal-gallery-dots" id="mdots">
+          ${photos.map((_,i)=>`<div class="gallery-dot${i===0?' active':''}" id="mdot-${i}"></div>`).join('')}
+        </div>
+        <div class="modal-gallery-credit" id="mcredit">${photos[0].credit||srcLabel[photos[0].src]||''}</div>
+      </div>`;
+    window._mPhotos = photos;
+    window._mGalIdx = 0;
+  } else {
+    mPhotoHeader.style.display='none';
+  }
   document.getElementById('mCat').textContent = catLabels[d.category];
   document.getElementById('mCat').style.color = {place:'#1a5a30',stay:'#1a4a6a',food:'#8a2810',other:'#4a2a7a'}[d.category];
   document.getElementById('mName').textContent = d.name;
@@ -1164,6 +1254,7 @@ function renderPlanner() {
     const d=TRAVEL_DATA.find(x=>x.id===id);if(!d)return'';
     const inPlan=inPlanIds.includes(id);
     return `<div class="saved-card" onclick="openModal('${id}')" style="${inPlan?'opacity:.5':''}">
+      ${d.photo?`<div style="width:100%;height:70px;border-radius:8px;overflow:hidden;margin-bottom:7px"><img src="${d.photo}" style="width:100%;height:100%;object-fit:cover" loading="lazy"></div>`:''}
       <div class="saved-card-name">${d.name}</div>
       <div class="saved-card-loc">📍 ${d.location||''}</div>
       <div class="saved-card-actions">
@@ -1199,7 +1290,8 @@ function renderPoll() {
     const pct = Math.round((v/maxVotes)*100);
     const voted = (votes[d.id+'_voters']||[]).includes(currentUser?.name);
     return `<div class="poll-card">
-      <div class="poll-name">${d.name}</div>
+      ${d.photo?`<div style="width:100%;height:90px;border-radius:10px;overflow:hidden;margin-bottom:10px;position:relative"><img src="${d.photo}" style="width:100%;height:100%;object-fit:cover" loading="lazy"><div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(10,28,18,.5),transparent)"></div><span style="position:absolute;bottom:7px;left:10px;color:#fff;font-family:Fraunces,serif;font-size:14px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.4)">${d.name}</span></div>`:''}
+      <div class="poll-name"${d.photo?' style="display:none"':''}>${d.name}</div>
       <div class="poll-loc">📍 ${d.location||''}</div>
       <div class="poll-bar-wrap"><div class="poll-bar" style="width:${v?pct:0}%"></div></div>
       <div class="poll-footer">
@@ -1269,13 +1361,18 @@ function saveKeys() {
   const ak = document.getElementById('apifyKey').value;
   const ok = document.getElementById('openaiKey').value;
   const ck = document.getElementById('claudeKey').value;
+  const gk = document.getElementById('googleKey').value;
   const keys = ls('brazil_keys')||{};
   if(ak && !ak.startsWith('•')) keys.apify = ak;
   if(ok && !ok.startsWith('•')) keys.openai = ok;
   if(ck && !ck.startsWith('•')) keys.claude = ck;
+  if(gk && !gk.startsWith('•')) { keys.google = gk; }
   lsSet('brazil_keys', keys);
-  const aiProvider = keys.openai ? 'GPT-4o (OpenAI)' : keys.claude ? 'Claude (Anthropic)' : 'none yet';
-  showNotify('✅ Keys saved — AI: ' + aiProvider);
+  const aiProvider = keys.openai ? 'GPT-4o' : keys.claude ? 'Claude' : 'none';
+  const gStatus = keys.google ? '✅ Google Places active' : '';
+  showNotify('✅ Keys saved — AI: ' + aiProvider + (gStatus ? ' · ' + gStatus : ''));
+  // Trigger Google photo loading if key just added
+  if(gk && !gk.startsWith('•')) enrichWithGooglePhotos();
 }
 
 function renderAdminKeys() {
@@ -1283,6 +1380,7 @@ function renderAdminKeys() {
   if(keys.apify) document.getElementById('apifyKey').value='••••••••';
   if(keys.openai) document.getElementById('openaiKey').value='••••••••';
   if(keys.claude) document.getElementById('claudeKey').value='••••••••';
+  if(keys.google) document.getElementById('googleKey').value='••••••••';
 }
 
 function log(msg, type='info') {
@@ -1478,6 +1576,210 @@ Return ONLY the JSON array.`;
 // ═══════════════════════════════════════════
 // NAV & UTILS
 // ═══════════════════════════════════════════
+// ─── GOOGLE PLACES PHOTO SYSTEM ───
+// Fetches real Google Maps photos for each place and merges into gallery
+// Uses Places API (New) — requires API key with Places API enabled
+
+const GOOGLE_CACHE_KEY = 'brazil_google_photos';
+const PLACE_SEARCH_TERMS = {
+  'christ-redeemer':   'Cristo Redentor Rio de Janeiro',
+  'sugarloaf':         'Pão de Açúcar Rio de Janeiro',
+  'mirante-dona-marta':'Mirante Dona Marta Rio de Janeiro',
+  'ipanema':           'Ipanema Beach Rio de Janeiro',
+  'copacabana':        'Copacabana Beach Rio de Janeiro',
+  'selarun':           'Escadaria Selarón Rio de Janeiro',
+  'pedra-telegrafo':   'Pedra do Telégrafo Rio de Janeiro',
+  'tijuca':            'Tijuca National Park Rio de Janeiro',
+  'morro-dois-irmaos': 'Morro Dois Irmãos Rio de Janeiro',
+  'hang-glide':        'Hang Gliding Pedra Bonita Rio de Janeiro',
+  'rio-rooftops':      'Bar Laje Rio de Janeiro rooftop',
+  'gabinete-leitura':  'Gabinete de Leitura Guilherme Araújo Rio de Janeiro',
+  'rocinha':           'Rocinha Favela Rio de Janeiro',
+  'museu-amanha':      'Museu do Amanhã Rio de Janeiro',
+  'ilha-grande':       'Ilha Grande Brazil',
+  'paraty':            'Paraty Rio de Janeiro Brazil',
+  'arraial-buzios':    'Arraial do Cabo Brazil',
+  'salvador':          'Pelourinho Salvador Bahia Brazil',
+  'itacare':           'Itacaré Bahia Brazil beach',
+  'sao-paulo':         'MASP Museu de Arte São Paulo',
+  'iguazu':            'Iguazu Falls Brazil',
+  'amazon':            'Amazon River Manaus Brazil',
+  'meeting-waters':    'Encontro das Águas Manaus Amazon',
+  'lencois':           'Lençóis Maranhenses Brazil dunes',
+  'pantanal':          'Pantanal wetlands Brazil',
+  'bonito':            'Bonito Mato Grosso do Sul Brazil river',
+  'jalapao':           'Jalapão Tocantins Brazil',
+  'bombinhas':         'Bombinhas Santa Catarina Brazil',
+  'miramar-windsor':   'Miramar by Windsor Hotel Copacabana',
+  'grand-hyatt':       'Grand Hyatt Rio de Janeiro',
+  'picinguaba':        'Pousada Picinguaba Brazil',
+  'rosewood-sp':       'Rosewood São Paulo Hotel',
+  'barra-ap204':       'Barra Salvador Bahia beach',
+  'amazon-lodge':      'Amazon jungle lodge Manaus Brazil',
+  'fogo-chao':         'Fogo de Chão Brazilian steakhouse',
+  'acaraje':           'Acarajé Salvador Bahia street food',
+  'seafood-picinguaba':'Picinguaba coastal restaurant São Paulo',
+  'carnival-samba':    'Rio Carnival Sambódromo Brazil',
+  'havaianas-flagship':'Havaianas store Ipanema Rio de Janeiro',
+  'gloria-market':     'Feira de Hippie Ipanema Rio de Janeiro',
+  'rocinha':           'Rocinha favela Rio de Janeiro',
+};
+
+let _googlePhotosLoaded = false;
+
+async function enrichWithGooglePhotos() {
+  const keys = ls('brazil_keys')||{};
+  if(!keys.google) return;
+  if(_googlePhotosLoaded) return;
+
+  // Check cache first (Google photos cached for 7 days)
+  const cache = ls(GOOGLE_CACHE_KEY)||{};
+  const cacheAge = ls(GOOGLE_CACHE_KEY+'_ts');
+  const SEVEN_DAYS = 7*24*60*60*1000;
+  const cacheValid = cacheAge && (Date.now()-cacheAge) < SEVEN_DAYS;
+
+  if(cacheValid && Object.keys(cache).length > 0) {
+    mergeGooglePhotosIntoData(cache);
+    _googlePhotosLoaded = true;
+    return;
+  }
+
+  log('🌐 Fetching Google Places photos…');
+  const newCache = {};
+  const ids = Object.keys(PLACE_SEARCH_TERMS);
+
+  for(let i=0; i<ids.length; i++) {
+    const id = ids[i];
+    const searchTerm = PLACE_SEARCH_TERMS[id];
+    try {
+      // Step 1: Find the place using Text Search
+      const searchResp = await fetch(
+        `https://places.googleapis.com/v1/places:searchText`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': keys.google,
+            'X-Goog-FieldMask': 'places.id,places.displayName,places.photos'
+          },
+          body: JSON.stringify({
+            textQuery: searchTerm,
+            maxResultCount: 1,
+            languageCode: 'en'
+          })
+        }
+      );
+      if(!searchResp.ok) {
+        const err = await searchResp.json();
+        console.warn('Places search error:', err);
+        continue;
+      }
+      const searchData = await searchResp.json();
+      const place = searchData.places?.[0];
+      if(!place?.photos?.length) continue;
+
+      // Step 2: Get up to 3 photo URLs
+      const photoUrls = [];
+      for(let p=0; p<Math.min(3, place.photos.length); p++) {
+        const photoRef = place.photos[p].name;
+        const photoUrl = `https://places.googleapis.com/v1/${photoRef}/media?key=${keys.google}&maxHeightPx=800&maxWidthPx=800`;
+        photoUrls.push({
+          url: photoUrl,
+          src: 'google',
+          credit: 'Google Places'
+        });
+      }
+      if(photoUrls.length) {
+        newCache[id] = photoUrls;
+        console.log(`✅ Google photos for ${id}: ${photoUrls.length}`);
+      }
+      // Small delay to avoid rate limiting
+      await new Promise(r=>setTimeout(r,100));
+    } catch(e) {
+      console.warn('Google Places error for', id, e.message);
+    }
+  }
+
+  if(Object.keys(newCache).length > 0) {
+    lsSet(GOOGLE_CACHE_KEY, newCache);
+    lsSet(GOOGLE_CACHE_KEY+'_ts', Date.now());
+    mergeGooglePhotosIntoData(newCache);
+    _googlePhotosLoaded = true;
+    showNotify(`🌐 Added Google Places photos to ${Object.keys(newCache).length} places`);
+    renderCards(); // Re-render with new photos
+  }
+}
+
+function mergeGooglePhotosIntoData(googleCache) {
+  // Insert Google photos at position 1 (after Instagram, before Wiki/Unsplash)
+  // so the gallery order is: IG → Google → Wiki → Unsplash
+  TRAVEL_DATA.forEach(d => {
+    if(googleCache[d.id]) {
+      const gPhotos = googleCache[d.id];
+      if(!d.photos) d.photos = [];
+      // Insert Google photos after first photo (Instagram), before rest
+      const insertPos = d.photos.length > 0 ? 1 : 0;
+      d.photos.splice(insertPos, 0, ...gPhotos);
+    }
+  });
+}
+
+// CSS badge for Google source
+// ─── GALLERY FUNCTIONS ───
+function mGalNext() {
+  if(!window._mPhotos) return;
+  window._mGalIdx = (window._mGalIdx+1) % window._mPhotos.length;
+  mGalUpdate();
+}
+function mGalPrev() {
+  if(!window._mPhotos) return;
+  window._mGalIdx = (window._mGalIdx-1+window._mPhotos.length) % window._mPhotos.length;
+  mGalUpdate();
+}
+function mGalUpdate() {
+  const idx = window._mGalIdx;
+  const track = document.getElementById('mtrack');
+  if(track) track.style.transform = `translateX(-${idx*100}%)`;
+  const srcLabel = {ig:'📸 Instagram',wiki:'🌐 Wikimedia Commons',unsplash:'📷 Unsplash',google:'📍 Google Places'};
+  const credit = document.getElementById('mcredit');
+  if(credit) credit.textContent = window._mPhotos[idx].credit || srcLabel[window._mPhotos[idx].src] || '';
+  window._mPhotos.forEach((_,i)=>{
+    const dot = document.getElementById('mdot-'+i);
+    if(dot) dot.className = 'gallery-dot'+(i===idx?' active':'');
+  });
+}
+
+
+// ─── CARD GALLERY ───
+const galState = {}; // {id: currentIndex}
+
+function galNext(id, total) {
+  if(!galState[id]) galState[id] = 0;
+  galState[id] = (galState[id] + 1) % total;
+  galUpdate(id, total);
+}
+function galPrev(id, total) {
+  if(!galState[id]) galState[id] = 0;
+  galState[id] = (galState[id] - 1 + total) % total;
+  galUpdate(id, total);
+}
+function galUpdate(id, total) {
+  const idx = galState[id] || 0;
+  const track = document.getElementById('track-'+id);
+  if(track) track.style.transform = `translateX(-${idx*100}%)`;
+  // Update count badge
+  const gal = document.getElementById('gal-'+id);
+  if(gal) {
+    const count = gal.querySelector('.gallery-count');
+    if(count) count.textContent = `${idx+1} / ${total}`;
+  }
+  // Update dots
+  for(let i=0;i<total;i++) {
+    const dot = document.getElementById(`dot-${id}-${i}`);
+    if(dot) dot.className = 'gallery-dot' + (i===idx?' active':'');
+  }
+}
+
 function switchView(name) {
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
