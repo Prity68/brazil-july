@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brazil July">
+<meta name="theme-color" content="#0d2b1a">
+<title>Brazil July 🇧🇷</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f3ed;
+  --surface: #ffffff;
+  --jungle: #0d2b1a;
+  --canopy: #1a4a28;
+  --leaf: #2d7a4a;
+  --lime: #8fce78;
+  --gold: #e5b840;
+  --amber: #f0a030;
+  --terracotta: #c8552a;
+  --sky: #3a8ab0;
+  --lavender: #7a5aaa;
+  --ink: #1a1208;
+  --ink2: #3a3428;
+  --muted: #7a7060;
+  --border: rgba(0,0,0,0.08);
+  --shadow: 0 2px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
+  --st: env(safe-area-inset-top,0px);
+  --sb: env(safe-area-inset-bottom,0px);
+  --radius: 18px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--jungle);scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100dvh;overflow-x:hidden}
+
+/* ── VIEWS ── */
+.view{display:none;min-height:100dvh}
+.view.active{display:block}
+
+/* ── NAV ── */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:var(--sb);z-index:200;box-shadow:0 -4px 24px rgba(0,0,0,0.07)}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 8px;gap:3px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:'DM Sans',sans-serif;transition:color .15s}
+.nav-btn.active{color:var(--leaf)}
+.nav-icon{font-size:21px;line-height:1}
+.nav-label{font-size:10px;font-weight:500;letter-spacing:.3px}
+
+/* ── DISCOVER ── */
+.hero{background:var(--jungle);color:#fff;padding:calc(var(--st)+18px) 20px 28px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(143,206,120,.15) 0%,transparent 70%)}
+.hero::after{content:'';position:absolute;bottom:-30px;left:-30px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(229,184,64,.1) 0%,transparent 70%)}
+.hero-eyebrow{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(26px,7vw,36px);font-weight:700;line-height:1.1;margin-bottom:4px}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.55);font-weight:300;margin-bottom:18px}
+.hero-pills{display:flex;gap:6px;flex-wrap:wrap}
+.pill{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.7);font-weight:500}
+.pill.ig{border-color:rgba(229,184,64,.4);color:var(--gold)}
+.pill.tt{border-color:rgba(143,206,120,.4);color:var(--lime)}
+.pill.yt{border-color:rgba(200,85,42,.5);color:#f07858}
+
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--canopy);color:#fff}
+.stat-cell{padding:11px 6px;text-align:center;border-right:1px solid rgba(255,255,255,.07)}
+.stat-cell:last-child{border:none}
+.stat-n{font-size:19px;font-weight:600;color:var(--gold);line-height:1}
+.stat-l{font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,.45);margin-top:2px}
+
+.sticky-controls{position:sticky;top:0;z-index:50;background:var(--bg);padding:12px 16px 4px;border-bottom:1px solid var(--border)}
+.search-row{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:0 12px;height:42px;margin-bottom:8px;transition:border-color .2s}
+.search-row:focus-within{border-color:var(--leaf)}
+.search-row input{flex:1;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:15px;background:transparent;color:var(--ink)}
+.search-row input::placeholder{color:#b0a898}
+.filter-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.filter-row::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s}
+.chip.on{color:#fff;border-color:transparent}
+.chip[data-f="all"].on{background:var(--jungle)}
+.chip[data-f="place"].on{background:var(--leaf)}
+.chip[data-f="stay"].on{background:var(--sky)}
+.chip[data-f="food"].on{background:var(--terracotta)}
+.chip[data-f="other"].on{background:var(--lavender)}
+
+.cards-list{padding:8px 14px calc(var(--sb)+80px);display:flex;flex-direction:column;gap:10px}
+.card{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.card:active{transform:scale(.985);box-shadow:0 1px 8px rgba(0,0,0,.07)}
+.card-stripe{height:3px}
+.cat-place .card-stripe{background:linear-gradient(90deg,var(--leaf),var(--lime))}
+.cat-stay .card-stripe{background:linear-gradient(90deg,var(--sky),#70c0e0)}
+.cat-food .card-stripe{background:linear-gradient(90deg,var(--terracotta),var(--amber))}
+.cat-other .card-stripe{background:linear-gradient(90deg,var(--lavender),#b090e0)}
+.card-inner{padding:13px 14px 14px}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px}
+.card-name{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--ink);line-height:1.2;flex:1}
+.cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.cat-place .cat-dot{background:var(--leaf)}
+.cat-stay .cat-dot{background:var(--sky)}
+.cat-food .cat-dot{background:var(--terracotta)}
+.cat-other .cat-dot{background:var(--lavender)}
+.card-loc{font-size:11px;color:var(--muted);margin-bottom:7px;display:flex;align-items:center;gap:3px}
+.card-desc{font-size:13px;color:var(--ink2);line-height:1.55;margin-bottom:9px}
+.card-footer{display:flex;justify-content:space-between;align-items:center}
+.card-sources{display:flex;gap:4px}
+.src-badge{font-size:10px;padding:3px 7px;border-radius:8px;font-weight:600}
+.src-ig{background:#fef3e0;color:#8a6010}
+.src-tt{background:#e8f8e8;color:#1a6020}
+.src-yt{background:#feeee8;color:#a03010}
+.vote-row{display:flex;align-items:center;gap:6px}
+.vote-btn{background:none;border:none;font-size:16px;cursor:pointer;padding:3px;border-radius:8px;transition:transform .15s}
+.vote-btn:active{transform:scale(1.3)}
+.vote-count{font-size:12px;font-weight:600;color:var(--muted)}
+.save-btn{background:none;border:none;font-size:18px;cursor:pointer;padding:3px;transition:transform .15s}
+.save-btn:active{transform:scale(1.3)}
+
+/* ── PLANNER ── */
+.planner-header{background:var(--jungle);color:#fff;padding:calc(var(--st)+18px) 20px 16px}
+.planner-header h2{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin-bottom:2px}
+.planner-header p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:12px}
+.planner-sync-row{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.5)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#888;flex-shrink:0}
+.sync-dot.live{background:var(--lime);box-shadow:0 0 6px var(--lime)}
+.sync-dot.saving{background:var(--gold);animation:pulse-sync .8s infinite}
+@keyframes pulse-sync{0%,100%{opacity:1}50%{opacity:.3}}
+.trip-dates{display:flex;gap:6px;margin-top:12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.trip-dates::-webkit-scrollbar{display:none}
+.date-chip{flex-shrink:0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:6px 12px;font-size:12px;color:rgba(255,255,255,.7);cursor:pointer;transition:all .15s}
+.date-chip.active{background:var(--gold);border-color:var(--gold);color:var(--jungle);font-weight:600}
+.planner-sync-banner{background:#e8f4ec;border-bottom:1px solid rgba(45,122,74,.15);padding:9px 16px;font-size:12px;color:var(--leaf);display:flex;align-items:center;gap:8px;display:none}
+.day-plan{padding:12px 16px 0}
+.day-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.day-count{background:var(--bg);border-radius:8px;padding:2px 8px;font-size:11px;color:var(--muted)}
+.plan-slots{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.plan-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:11px 13px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 6px rgba(0,0,0,.05);transition:transform .15s}
+.plan-item:active{transform:scale(.98)}
+.plan-item-accent{width:3px;height:36px;border-radius:2px;flex-shrink:0}
+.plan-item-left{flex:1}
+.plan-item-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.plan-item-meta{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.plan-item-added-by{background:var(--bg);border-radius:6px;padding:1px 6px;font-size:10px;font-weight:500}
+.plan-remove{background:none;border:none;font-size:15px;cursor:pointer;color:#ccc;padding:4px;line-height:1;transition:color .15s}
+.plan-remove:hover{color:var(--terracotta)}
+.plan-empty{border:1.5px dashed rgba(0,0,0,.12);border-radius:14px;padding:20px;text-align:center;font-size:13px;color:var(--muted)}
+.saved-section{padding:14px 16px;border-top:1px solid var(--border);margin-top:4px}
+.saved-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin-bottom:10px;color:var(--ink);display:flex;align-items:center;gap:8px}
+.saved-note{font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400}
+.saved-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.saved-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:11px;box-shadow:0 1px 6px rgba(0,0,0,.05);cursor:pointer}
+.saved-card-name{font-size:13px;font-weight:500;color:var(--ink);line-height:1.3;margin-bottom:3px}
+.saved-card-loc{font-size:11px;color:var(--muted)}
+.saved-card-actions{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.add-to-day-btn{font-size:11px;color:var(--leaf);font-weight:600;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;padding:0}
+.unsave-btn{font-size:13px;background:none;border:none;cursor:pointer;color:var(--muted)}
+.empty-plan{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-plan .em{font-size:36px;margin-bottom:8px}
+.empty-plan p{font-size:14px}
+
+/* ── POLL ── */
+.poll-header{background:var(--jungle);color:#fff;padding:calc(var(--st)+18px) 20px 20px}
+.poll-header h2{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin-bottom:4px}
+.poll-header p{font-size:13px;color:rgba(255,255,255,.55)}
+.poll-list{padding:10px 16px calc(var(--sb)+80px);display:flex;flex-direction:column;gap:8px}
+.poll-card{background:var(--surface);border-radius:14px;padding:13px 14px;border:1px solid var(--border);box-shadow:0 1px 8px rgba(0,0,0,.05)}
+.poll-name{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.poll-loc{font-size:11px;color:var(--muted);margin-bottom:8px}
+.poll-bar-wrap{background:#f0ece6;border-radius:8px;height:8px;margin-bottom:5px;overflow:hidden}
+.poll-bar{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--leaf),var(--lime));transition:width .4s}
+.poll-footer{display:flex;justify-content:space-between;align-items:center}
+.poll-votes{font-size:12px;color:var(--muted)}
+.poll-vote-btn{display:flex;align-items:center;gap:5px;background:none;border:1.5px solid var(--border);border-radius:10px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;color:var(--ink);font-family:'DM Sans',sans-serif;transition:all .15s}
+.poll-vote-btn.voted{background:var(--jungle);color:#fff;border-color:var(--jungle)}
+
+/* ── ADMIN ── */
+.admin-header{background:var(--jungle);color:#fff;padding:calc(var(--st)+18px) 20px 20px}
+.admin-header h2{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin-bottom:4px}
+.admin-header p{font-size:13px;color:rgba(255,255,255,.55)}
+.admin-body{padding:16px;display:flex;flex-direction:column;gap:14px;padding-bottom:calc(var(--sb)+80px)}
+.admin-card{background:var(--surface);border-radius:var(--radius);padding:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.admin-card h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin-bottom:3px;color:var(--ink)}
+.admin-card p{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.5}
+.input-row{display:flex;gap:8px;margin-bottom:8px}
+.input-row input,.form-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;background:var(--bg);color:var(--ink);outline:none;transition:border-color .2s}
+.input-row input:focus,.form-input:focus{border-color:var(--leaf)}
+.btn{padding:9px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+.btn-primary{background:var(--jungle);color:#fff}
+.btn-primary:hover{background:var(--canopy)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.btn-sm{padding:6px 14px;font-size:12px}
+.btn-danger{background:#feeee8;color:var(--terracotta)}
+.tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tag-item{display:flex;align-items:center;gap:5px;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-size:12px;color:var(--ink)}
+.tag-remove{background:none;border:none;cursor:pointer;font-size:13px;color:var(--muted);padding:0;line-height:1}
+.scrape-log{background:#f0f4f0;border-radius:10px;padding:10px 12px;font-size:12px;color:var(--ink2);font-family:monospace;max-height:160px;overflow-y:auto;line-height:1.7}
+.scrape-log .log-ok{color:#1a5a20}
+.scrape-log .log-err{color:var(--terracotta)}
+.scrape-log .log-info{color:var(--sky)}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.stat-box{background:var(--bg);border-radius:10px;padding:10px;text-align:center}
+.stat-box .n{font-size:22px;font-weight:600;color:var(--leaf)}
+.stat-box .l{font-size:11px;color:var(--muted);margin-top:2px}
+.scrape-sources{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.source-row{display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:10px;padding:8px 12px}
+.source-row-left{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.source-toggle{position:relative;width:38px;height:22px;flex-shrink:0}
+.source-toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:#ccc;border-radius:11px;cursor:pointer;transition:.2s}
+.source-toggle input:checked+.toggle-track{background:var(--leaf)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:.2s}
+.source-toggle input:checked~.toggle-thumb{left:19px}
+.july-tips{background:linear-gradient(135deg,#e8f4ec,#fff9e8);border:1px solid rgba(45,122,74,.2);border-radius:12px;padding:12px 14px}
+.july-tips h4{font-size:13px;font-weight:600;color:var(--leaf);margin-bottom:6px}
+.july-tips ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.july-tips li{font-size:12px;color:var(--ink2);display:flex;align-items:flex-start;gap:6px}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,28,18,.65);z-index:300;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px)}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg);border-radius:24px 24px 0 0;width:100%;max-height:88dvh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);padding-bottom:var(--sb)}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-handle{width:36px;height:4px;background:rgba(0,0,0,.12);border-radius:2px;margin:12px auto 0}
+.modal-accent{height:3px;margin:12px 20px 0;border-radius:2px}
+.modal-header{padding:12px 20px 10px}
+.modal-cat-label{font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
+.modal-name{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:4px}
+.modal-loc{font-size:13px;color:var(--muted);margin-bottom:12px}
+.modal-action-row{display:flex;gap:8px;margin-bottom:4px}
+.modal-action-btn{flex:1;padding:10px;border-radius:12px;border:none;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .15s}
+.modal-save-btn{background:#e8f4ec;color:var(--leaf)}
+.modal-save-btn.saved{background:var(--leaf);color:#fff}
+.modal-vote-btn{background:#fff9e0;color:#8a6010}
+.modal-vote-btn.voted{background:var(--gold);color:var(--jungle)}
+.modal-divider{height:1px;background:var(--border);margin:0 20px}
+.modal-section{padding:14px 20px}
+.modal-section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:8px}
+.modal-desc{font-size:15px;color:var(--ink2);line-height:1.7}
+.modal-sources{display:flex;flex-direction:column;gap:7px}
+.modal-src-link{display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:12px;text-decoration:none;font-size:13px;font-weight:500;transition:opacity .15s}
+.modal-src-link:active{opacity:.7}
+.modal-src-link.ig{background:#fef3e0;color:#7a5010}
+.modal-src-link.tt{background:#e8f8e8;color:#1a5a20}
+.modal-src-link.yt{background:#feeee8;color:#8a2810}
+.modal-src-label{flex:1}
+.modal-src-arr{opacity:.5;font-size:12px}
+.july-badge{display:inline-flex;align-items:center;gap:4px;background:#e8f4ec;color:var(--leaf);font-size:11px;font-weight:600;padding:3px 8px;border-radius:8px;margin-bottom:8px}
+
+/* ── LOGIN ── */
+.login-screen{position:fixed;inset:0;background:var(--jungle);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px}
+.login-screen.hidden{display:none}
+.login-emoji{font-size:56px;margin-bottom:16px}
+.login-title{font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:#fff;margin-bottom:6px;text-align:center}
+.login-title em{color:var(--gold);font-style:italic}
+.login-sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:36px;text-align:center;line-height:1.6}
+.pin-display{display:flex;gap:12px;justify-content:center;margin-bottom:24px}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.3);transition:all .2s}
+.pin-dot.filled{background:#fff;border-color:#fff}
+.pin-error{font-size:13px;color:#f08070;text-align:center;min-height:18px;margin-bottom:10px}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:240px;margin:0 auto}
+.num-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:50%;width:68px;height:68px;font-size:22px;font-weight:500;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.num-btn:active{background:rgba(255,255,255,.18);transform:scale(.93)}
+.num-btn.back{font-size:18px;background:none;border-color:transparent;color:rgba(255,255,255,.4)}
+.name-setup{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
+.name-setup input{width:100%;padding:12px 16px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:16px;color:#fff;outline:none;text-align:center;max-width:280px}
+.name-setup input::placeholder{color:rgba(255,255,255,.35)}
+.name-setup .btn{width:100%;max-width:280px;padding:13px;font-size:15px;background:var(--gold);color:var(--jungle);border-radius:12px}
+.user-avatars{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
+.avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all .2s;flex-direction:column;gap:1px}
+.avatar.selected{border-color:#fff;transform:scale(1.08)}
+.avatar .av-name{font-size:9px;color:rgba(255,255,255,.7);text-align:center;margin-top:4px;font-weight:400}
+.user-indicator{position:fixed;top:calc(var(--st)+6px);right:12px;z-index:150;background:rgba(0,0,0,.4);backdrop-filter:blur(8px);border-radius:20px;padding:4px 10px;font-size:12px;color:#fff;display:flex;align-items:center;gap:5px;border:1px solid rgba(255,255,255,.1)}
+
+/* ── UTIL ── */
+.empty-state{text-align:center;padding:50px 24px;color:var(--muted)}
+.empty-state .em2{font-size:44px;margin-bottom:12px}
+.empty-state p{font-size:14px;line-height:1.6}
+.spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress-bar{height:3px;background:rgba(255,255,255,.15);border-radius:2px;margin-top:10px;overflow:hidden}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
+.notify{position:fixed;top:calc(var(--st)+60px);left:50%;transform:translateX(-50%);background:var(--jungle);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:500;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.notify.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-emoji">🇧🇷</div>
+  <div class="login-title">Brazil <em>July</em></div>
+  <div class="login-sub" id="loginSub">Your group's travel intelligence<br>for the July trip</div>
+  <div id="loginPhase1">
+    <div style="margin-bottom:20px">
+      <div class="user-avatars" id="avatarPicker"></div>
+      <p style="font-size:12px;color:rgba(255,255,255,.4);text-align:center">Select your name</p>
+    </div>
+    <div class="pin-display" id="pinDisplay"></div>
+    <div class="pin-error" id="pinError"></div>
+    <div class="numpad" id="numpad"></div>
+  </div>
+  <div id="loginPhase2" style="display:none;width:100%;max-width:320px">
+    <div class="name-setup">
+      <p style="font-size:14px;color:rgba(255,255,255,.6);text-align:center">First time? Enter your name</p>
+      <input type="text" id="nameInput" placeholder="Your name (e.g. Prity)" maxlength="20" autocomplete="off">
+      <button class="btn" onclick="confirmName()">Join the trip →</button>
+    </div>
+  </div>
+</div>
+
+<!-- USER INDICATOR -->
+<div class="user-indicator" id="userIndicator" style="display:none">
+  <span id="userEmoji"></span><span id="userName"></span>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notify" id="notify"></div>
+
+<!-- ══════════ DISCOVER VIEW ══════════ -->
+<div class="view active" id="viewDiscover">
+  <div class="hero">
+    <div class="hero-eyebrow">Brazil · July 2025</div>
+    <h1>Travel <em>Intelligence</em></h1>
+    <div class="hero-sub">Live-scraped · AI categorized · Group-curated</div>
+    <div class="hero-pills">
+      <span class="pill ig">📸 Instagram</span>
+      <span class="pill tt">🎵 TikTok</span>
+      <span class="pill yt">▶ YouTube</span>
+    </div>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-cell"><div class="stat-n" id="sTotal">52</div><div class="stat-l">Items</div></div>
+    <div class="stat-cell"><div class="stat-n" id="sPlace">32</div><div class="stat-l">Places</div></div>
+    <div class="stat-cell"><div class="stat-n" id="sStay">8</div><div class="stat-l">Stays</div></div>
+    <div class="stat-cell"><div class="stat-n" id="sFood">6</div><div class="stat-l">Food</div></div>
+  </div>
+  <div class="sticky-controls">
+    <div class="search-row"><span>🔍</span><input type="search" id="searchInput" placeholder="Search places, food, tips…" autocomplete="off" autocorrect="off" oninput="renderCards()"></div>
+    <div class="filter-row">
+      <button class="chip on" data-f="all" onclick="setFilter('all')">All</button>
+      <button class="chip" data-f="place" onclick="setFilter('place')">🗺 Places</button>
+      <button class="chip" data-f="stay" onclick="setFilter('stay')">🏨 Stays</button>
+      <button class="chip" data-f="food" onclick="setFilter('food')">🍽 Food</button>
+      <button class="chip" data-f="other" onclick="setFilter('other')">💡 Tips</button>
+    </div>
+  </div>
+  <div class="cards-list" id="cardsList"></div>
+</div>
+
+<!-- ══════════ PLANNER VIEW ══════════ -->
+<div class="view" id="viewPlanner">
+  <div class="planner-header">
+    <h2>Group Itinerary</h2>
+    <p>One shared plan — everyone sees &amp; edits this</p>
+    <div class="planner-sync-row">
+      <div class="sync-dot" id="syncDot"></div>
+      <span id="syncStatus">Connecting…</span>
+    </div>
+    <div class="trip-dates" id="dayTabs"></div>
+  </div>
+  <div class="day-plan" style="padding:14px 16px 0">
+    <div class="day-label">
+      <span id="dayLabel">Jul 1</span>
+      <span class="day-count" id="dayCount">0 places</span>
+    </div>
+    <div class="plan-slots" id="planSlots"></div>
+  </div>
+  <div class="saved-section">
+    <div class="saved-title">⭐ Your Wishlist <span class="saved-note">— private to you</span></div>
+    <div id="savedGrid"></div>
+  </div>
+  <div style="height:90px"></div>
+</div>
+
+<!-- ══════════ POLL VIEW ══════════ -->
+<div class="view" id="viewPoll">
+  <div class="poll-header">
+    <h2>Group Poll</h2>
+    <p>Vote on places — top picks shape the itinerary</p>
+  </div>
+  <div class="poll-list" id="pollList"></div>
+</div>
+
+<!-- ══════════ ADMIN VIEW ══════════ -->
+<div class="view" id="viewAdmin">
+  <div class="admin-header">
+    <h2>Admin</h2>
+    <p>Run fresh scrapes, manage sources, configure the app</p>
+  </div>
+  <div class="admin-body">
+
+    <!-- STATS -->
+    <div class="admin-card">
+      <h3>📊 Database stats</h3>
+      <p>Current state of scraped & categorized content</p>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="n" id="adTotal">52</div><div class="l">Total items</div></div>
+        <div class="stat-box"><div class="n" id="adDupes" style="color:var(--amber)">86</div><div class="l">Dupes merged</div></div>
+        <div class="stat-box"><div class="n" id="adRaw">158</div><div class="l">Raw posts scraped</div></div>
+        <div class="stat-box"><div class="n" id="adLast">Today</div><div class="l">Last scrape</div></div>
+      </div>
+    </div>
+
+    <!-- SHARED ITINERARY SYNC -->
+    <div class="admin-card">
+      <h3>🔗 Shared itinerary sync</h3>
+      <p>The itinerary is <strong>one shared plan for the whole group</strong>. To sync across all 6 iPhones in real time, set up a free <a href="https://jsonbin.io" target="_blank" style="color:var(--leaf)">JSONBin.io</a> account:</p>
+      <ol style="font-size:13px;color:var(--ink2);padding-left:18px;line-height:2;margin-bottom:12px">
+        <li>Create a free account at jsonbin.io</li>
+        <li>Create a new Bin (the initial content can be <code style="background:var(--bg);padding:0 4px;border-radius:4px">{}</code>)</li>
+        <li>Copy the Bin ID (looks like <code style="background:var(--bg);padding:0 4px;border-radius:4px">64abc123...</code>)</li>
+        <li>Paste it below and share the same ID with your friends</li>
+      </ol>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
+        <input class="form-input" type="text" id="jsonbinId" placeholder="JSONBin Bin ID (e.g. 64abc123...)">
+        <input class="form-input" type="password" id="jsonbinKey" placeholder="JSONBin Master Key (optional, for private bins)">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveSyncConfig()">Connect sync</button>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px">Without a Bin ID, the itinerary saves locally on each device but won't sync across phones.</p>
+    </div>
+
+    <!-- API KEYS -->
+    <div class="admin-card">
+      <h3>🔑 API Keys</h3>
+      <p>Required for real-time scraping and AI categorization. Keys are stored locally on this device only.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
+        <input class="form-input" type="password" id="apifyKey" placeholder="Apify API key (apify_api_...)">
+        <input class="form-input" type="password" id="claudeKey" placeholder="Anthropic API key (sk-ant-...)">
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="saveKeys()">Save keys</button>
+    </div>
+
+    <!-- HASHTAGS -->
+    <div class="admin-card">
+      <h3>#️⃣ Instagram hashtags</h3>
+      <p>Hashtags to include in the next Instagram scrape</p>
+      <div class="tag-list" id="igTagList"></div>
+      <div class="input-row">
+        <input type="text" id="igTagInput" placeholder="Add hashtag (without #)" onkeydown="if(event.key==='Enter')addTag('ig')">
+        <button class="btn btn-primary btn-sm" onclick="addTag('ig')">Add</button>
+      </div>
+    </div>
+
+    <!-- TIKTOK HASHTAGS -->
+    <div class="admin-card">
+      <h3>🎵 TikTok hashtags</h3>
+      <p>Hashtags for TikTok scraping</p>
+      <div class="tag-list" id="ttTagList"></div>
+      <div class="input-row">
+        <input type="text" id="ttTagInput" placeholder="Add hashtag" onkeydown="if(event.key==='Enter')addTag('tt')">
+        <button class="btn btn-primary btn-sm" onclick="addTag('tt')">Add</button>
+      </div>
+    </div>
+
+    <!-- YOUTUBE SEARCHES -->
+    <div class="admin-card">
+      <h3>▶ YouTube search terms</h3>
+      <p>Search queries for YouTube guide scraping</p>
+      <div class="tag-list" id="ytTagList"></div>
+      <div class="input-row">
+        <input type="text" id="ytTagInput" placeholder="e.g. Brazil travel guide 2025" onkeydown="if(event.key==='Enter')addTag('yt')">
+        <button class="btn btn-primary btn-sm" onclick="addTag('yt')">Add</button>
+      </div>
+    </div>
+
+    <!-- SCRAPE -->
+    <div class="admin-card">
+      <h3>🚀 Run fresh scrape</h3>
+      <p>Scrape all enabled sources, categorize new content with Claude, and merge duplicates. New details on existing places will be added — nothing will be overwritten.</p>
+      <div class="scrape-sources" id="scrapeSources">
+        <div class="source-row">
+          <div class="source-row-left">📸 Instagram</div>
+          <label class="source-toggle"><input type="checkbox" id="srcIg" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="source-row">
+          <div class="source-row-left">🎵 TikTok</div>
+          <label class="source-toggle"><input type="checkbox" id="srcTt" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="source-row">
+          <div class="source-row-left">▶ YouTube</div>
+          <label class="source-toggle"><input type="checkbox" id="srcYt" checked><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:4px">Results per source</div>
+        <input class="form-input" type="number" id="scrapeLimit" value="30" min="5" max="100" style="max-width:100px">
+      </div>
+      <button class="btn btn-primary" id="scrapeBtn" onclick="runScrape()">Run scrape</button>
+      <div class="progress-bar" id="progressBar" style="display:none"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="scrape-log" id="scrapeLog" style="margin-top:10px;display:none"></div>
+    </div>
+
+    <!-- JULY TIPS -->
+    <div class="admin-card">
+      <h3>☀️ July-specific tips from data</h3>
+      <div class="july-tips">
+        <h4>What the data says about July in Brazil</h4>
+        <ul>
+          <li>🌦 <span>July is Brazil's dry season in the northeast — perfect for Lençóis Maranhenses lagoons</span></li>
+          <li>🌊 <span>Rio beaches are cooler (20–25°C) but surf is excellent. Bring a light layer for evenings</span></li>
+          <li>🐆 <span>Best time for Pantanal — dry season concentrates wildlife around waterholes</span></li>
+          <li>🐬 <span>Amazon water levels start falling — flooded forest canoe is still possible through July</span></li>
+          <li>👥 <span>Brazilian winter school holidays mean domestic crowds at beach destinations — book early</span></li>
+          <li>🎭 <span>No Carnival, but Salvador has Micareta (out-of-season Carnival) events in July some years</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- USERS -->
+    <div class="admin-card">
+      <h3>👥 Group members</h3>
+      <p>Users who have logged in to this app</p>
+      <div id="usersList" style="display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+
+    <!-- DANGER -->
+    <div class="admin-card">
+      <h3>⚠️ Danger zone</h3>
+      <p>These actions cannot be undone.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-danger btn-sm" onclick="clearVotes()">Clear all votes</button>
+        <button class="btn btn-danger btn-sm" onclick="resetApp()">Reset all data</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" id="nb-discover" onclick="switchView('Discover')"><span class="nav-icon">🔍</span><span class="nav-label">Discover</span></button>
+  <button class="nav-btn" id="nb-planner" onclick="switchView('Planner')"><span class="nav-icon">📅</span><span class="nav-label">Planner</span></button>
+  <button class="nav-btn" id="nb-poll" onclick="switchView('Poll')"><span class="nav-icon">🗳</span><span class="nav-label">Group Vote</span></button>
+  <button class="nav-btn" id="nb-admin" onclick="switchView('Admin')"><span class="nav-icon">⚙️</span><span class="nav-label">Admin</span></button>
+</nav>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-accent" id="mAccent"></div>
+    <div class="modal-header">
+      <div class="modal-cat-label" id="mCat"></div>
+      <div class="modal-name" id="mName"></div>
+      <div class="modal-loc" id="mLoc"></div>
+      <div class="modal-action-row">
+        <button class="modal-action-btn modal-save-btn" id="mSaveBtn" onclick="toggleSave()">⭐ Save</button>
+        <button class="modal-action-btn modal-vote-btn" id="mVoteBtn" onclick="toggleVoteModal()">👍 Vote</button>
+        <button class="modal-action-btn" style="background:#f0eaf8;color:var(--lavender);flex:0.6" onclick="addToPlanner()">📅 Plan</button>
+      </div>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-section">
+      <div class="modal-section-title">What people say</div>
+      <div id="mJulyBadge"></div>
+      <div class="modal-desc" id="mDesc"></div>
+    </div>
+    <div class="modal-section">
+      <div class="modal-section-title">Sources</div>
+      <div class="modal-sources" id="mSources"></div>
+    </div>
+    <div style="height:20px"></div>
+  </div>
+</div>
+
+<!-- ADD TO DAY MODAL -->
+<div class="modal-overlay" id="dayPickerOverlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div style="padding:16px 20px">
+      <div style="font-family:'Fraunces',serif;font-size:20px;font-weight:700;margin-bottom:4px">Add to day</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px">Choose which day of the trip</div>
+      <div id="dayPickerList" style="display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+    <div style="height:20px"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+const TRAVEL_DATA = [
+  {id:'christ-redeemer',name:"Christ the Redeemer",category:"place",location:"Rio de Janeiro",julyTip:true,description:"One of the New Seven Wonders of the World atop Corcovado mountain. Go before 8am to beat crowds. Helicopter tour gives the best aerial views (~$80/person). About $18 USD entry via the Corcovado cog train. In July: mornings can be misty — aim for 10am–2pm for clearest views.",sources:[{type:"ig",label:"Rio mini guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Know before you go + prices",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
+  {id:'sugarloaf',name:"Sugarloaf Mountain",category:"place",location:"Rio de Janeiro",description:"Best at sunset or on a clear day — go earlier for fewer crowds. ~$45 USD entry. Second cable car from Morro da Urca gives the best panoramic Rio view. Free viewpoint at the base (Mirante do Pão de Açúcar) is also stunning.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWwsOsgDWSX/"},{type:"tt",label:"Prices & tips",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
+  {id:'mirante-dona-marta',name:"Mirante Dona Marta",category:"place",location:"Rio de Janeiro",description:"Best FREE sunset viewpoint in Rio — no entrance fee, rarely crowded. Christ the Redeemer on one side, Sugarloaf on the other. Easy Uber ride. One of the most genuinely unmissable spots that most tourists skip.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWt1KDnDWUz/"}]},
+  {id:'ipanema',name:"Ipanema & Leblon Beaches",category:"place",location:"Rio de Janeiro",julyTip:true,description:"More local-feeling than Copacabana. Bring cash for beach vendors. Ipanema Hippie Market on Sundays: food, art, vintage vinyl. In July: water is cooler (~22°C) but beach culture is very much alive. Perfect for morning walks.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Shopping guide",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'copacabana',name:"Copacabana Beach & Night Market",category:"place",location:"Rio de Janeiro",description:"Iconic promenade — good base for accommodation (then Uber to Ipanema). Night market has Brazil jerseys, jewelry, gifts. New Year's Eve here is legendary. Praia Vermelha nearby is quieter.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'selarun',name:"Escadaria Selarón",category:"place",location:"Rio de Janeiro / Lapa",description:"Mosaic staircase with tiles from 60+ countries. Best early morning before crowds. Free. Head to Santa Teresa neighborhood after for cafés and galleries. Lopa Art Café (Loja Patuá) is a beautiful nearby stop.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Know before you go",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
+  {id:'pedra-telegrafo',name:"Pedra do Telégrafo",category:"place",location:"Rio de Janeiro",description:"Dramatic cliffside hike with stunning ocean views. Popular for dramatic photos. Go early. Can combine with a full Rio day including Cristo and Sugarloaf.",sources:[{type:"ig",label:"Instagram post",url:"https://www.instagram.com/p/DWteROamn2D/"}]},
+  {id:'tijuca',name:"Tijuca National Park",category:"place",location:"Rio de Janeiro",julyTip:true,description:"World's largest urban rainforest. Download AllTrails offline before going. Hike Pedra Bonita, Primatas Waterfall, Floresta da Tijuca. Free entry. July: dry season makes trails more accessible — good visibility and cooler temps for hiking.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"},{type:"tt",label:"Prices guide",url:"https://www.tiktok.com/@letterstoyoublog/video/7429008004516941102"}]},
+  {id:'morro-dois-irmaos',name:"Morro Dois Irmãos",category:"place",location:"Rio de Janeiro",description:"Iconic sunrise hike — panoramic views over Ipanema and the Atlantic. One of the most recommended active experiences in Rio. Best combined with breakfast in Ipanema afterward.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
+  {id:'hang-glide',name:"Hang Gliding over Rio",category:"place",location:"Rio de Janeiro",description:"Described across TikTok as 'the best view in the city, hands down'. Tandem gliding launches from Pedra Bonita, lands on the beach. Multiple operators — book in advance. One of the most memorable Rio experiences.",sources:[{type:"tt",label:"Rio guide you wish you had",url:"https://www.tiktok.com/@calumtravels/video/7598552511930305800"},{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
+  {id:'rio-rooftops',name:"Rio Rooftop Bars",category:"place",location:"Rio de Janeiro",description:"Top 5: 1. Sky Leme, 2. Bar Laje, 3. Classico Beach Club, 4. Isabel Lounge, 5. Sky Lab. Smart-casual dress. Best for sunset drinks with sweeping city views — perfect for a group evening.",sources:[{type:"tt",label:"5 Rio rooftops",url:"https://www.tiktok.com/@the_rooftopguide/video/7576748413136440598"}]},
+  {id:'gabinete-leitura',name:"Gabinete de Leitura",category:"place",location:"Rio de Janeiro",description:"One of the most beautiful libraries/museums in Brazil — a hidden gem most tourists miss. Stunning neo-Gothic interior. Don't leave Rio without a stop here.",sources:[{type:"tt",label:"Hidden gem library",url:"https://www.tiktok.com/@postcardsfromayana/video/7590067195464420622"}]},
+  {id:'gloria-market',name:"Glória Sunday Market",category:"place",location:"Rio de Janeiro",description:"Local Sunday market with food, music, culture, and real community energy. Much less touristy than Selarón. Feira de Hippie in Ipanema also runs Sundays — vintage vinyl, food, art.",sources:[{type:"tt",label:"Rio guide",url:"https://www.tiktok.com/@calumtravels/video/7598552511930305800"}]},
+  {id:'rocinha',name:"Rocinha Favela Tour",category:"place",location:"Rio de Janeiro",description:"Rio's largest favela. Go with a LOCAL guide — not a bus tour. Gives real cultural context on history, urban planning, and community life. 'Be a Local' tours recommended. Vibrant culture and resilience.",sources:[{type:"tt",label:"Rocinha explained",url:"https://www.tiktok.com/@real.estates/video/7509476776700054814"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"}]},
+  {id:'museu-amanha',name:"Museu do Amanhã & MAR",category:"place",location:"Rio de Janeiro",description:"Futuristic architecture on the revitalized port waterfront. Museu de Arte do Rio (MAR) is steps away with Brazilian art and social history. Half-day minimum. Great indoor option for a rainy July day.",sources:[{type:"tt",label:"2-week Brazil itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"}]},
+  {id:'ilha-grande',name:"Ilha Grande",category:"place",location:"Rio de Janeiro state",julyTip:true,description:"Car-free island — no motorized vehicles allowed. Pristine beaches and jungle trails. Recommended for a weekend trip from Rio. July: ideal conditions — dry, cooler weather, good for hiking across the island.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Brazil spots",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"}]},
+  {id:'paraty',name:"Paraty",category:"place",location:"Rio de Janeiro state",julyTip:true,description:"UNESCO-listed colonial Portuguese town — cobblestone streets, jungle, and sea. Bus from São Paulo is comfortable. Highlights: Centro Histórico, boat trip to Lagoa Azul, Cachoeira do Tobogã. Recommend 3–5 days. July: dry season and mild weather = perfect.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"2-week Brazil itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"}]},
+  {id:'arraial-buzios',name:"Arraial do Cabo & Búzios",category:"place",location:"Rio de Janeiro state",description:"Arraial: crystal-clear turquoise water — 'Caribbean of Brazil'. Búzios: charming peninsula with beaches and nightlife. Both are great day trips from Rio (2–3hr drive) or extend to a weekend.",sources:[{type:"ig",label:"Rio mini guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"}]},
+  {id:'salvador',name:"Salvador de Bahia",category:"place",location:"Bahia",description:"Soul of Brazil — shaped by Afro-Brazilian heritage. Pelourinho district: UNESCO World Heritage, colorful colonial streets, Olodum drums Tuesday nights. Museu Afro-Brasileiro is unmissable. Brazil's first capital.",sources:[{type:"ig",label:"Salvador post",url:"https://www.instagram.com/p/DWwmBd_jRnO/"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"},{type:"yt",label:"10 Best Places in Salvador 2026",url:"https://www.youtube.com/watch?v=3Qe4iVpyeso"}]},
+  {id:'itacare',name:"Itacaré",category:"place",location:"Bahia",description:"Beach town with excellent surf, Atlantic Forest trails to beaches, and laid-back vibe. Book accommodation well in advance. Midweek is quieter. Multiple beaches reachable via jungle trails.",sources:[{type:"ig",label:"Itacaré guide",url:"https://www.instagram.com/p/DWtKaXpjTOH/"}]},
+  {id:'sao-paulo',name:"São Paulo",category:"place",location:"São Paulo",description:"Brazil's cultural capital — top-tier museums, galleries, restaurants. MASP on Paulista Avenue (free Tuesdays). Parque Ibirapuera for green space. Best neighborhoods: Vila Madalena (street art), Pinheiros, Liberdade (Japanese-Brazilian). Allow 3–4 days.",sources:[{type:"ig",label:"São Paulo post",url:"https://www.instagram.com/p/DWusZ0MjpXd/"},{type:"tt",label:"2-week itinerary",url:"https://www.tiktok.com/@mishel_travel/video/7594862012497251606"},{type:"yt",label:"Ultimate São Paulo Guide",url:"https://www.youtube.com/watch?v=n1NjYE2qmzM"}]},
+  {id:'iguazu',name:"Iguazu Falls",category:"place",location:"Foz do Iguaçu, Paraná",julyTip:true,description:"One of the world's greatest natural wonders — photos don't do it justice. Brazilian side: panoramic views. Argentine side: walk through the mist. Fly from Rio. Allow 2 full days. July: dry season, clear skies, but still powerful flows.",sources:[{type:"ig",label:"Rio guide",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"},{type:"yt",label:"18 Best Places in Brazil",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
+  {id:'amazon',name:"Amazon Jungle — Manaus",category:"place",location:"Amazonas",julyTip:true,description:"Min 4 days/3 nights. Activities: night caiman spotting, piranha fishing, jungle treks, flooded forest canoe, river sunsets, medicinal plants. Pack: strong repellent, loose clothes, dry bag, powerbank, flashlight. July: water levels falling — great for wildlife spotting.",sources:[{type:"ig",label:"Amazon 4-day guide",url:"https://www.instagram.com/p/DWY2fA8COI0/"},{type:"tt",label:"Brazil bucket list pt2",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"},{type:"yt",label:"18 Best Places in Brazil",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
+  {id:'meeting-waters',name:"Meeting of the Waters",category:"place",location:"Manaus, Amazonas",description:"Rio Negro (black) meets Amazon (sandy-brown) — rivers flow side by side for 6km without mixing. One of nature's most surreal phenomena. From Manaus by boat. Often combined with Indigenous village visits and pink dolphin spotting.",sources:[{type:"ig",label:"Meeting of waters",url:"https://www.instagram.com/p/DVoOWcaEXmt/"},{type:"tt",label:"First-timers 12 spots",url:"https://www.tiktok.com/@passportarchives/video/7622353187957230878"}]},
+  {id:'lencois',name:"Lençóis Maranhenses",category:"place",location:"Maranhão",julyTip:true,description:"Sand dunes with freshwater lagoons — one of the most otherworldly landscapes on Earth. Fly to Barreirinhas, then 4WD tour. July is PEAK season — lagoons full after rainy season. Book everything months in advance.",sources:[{type:"yt",label:"Lençóis Maranhenses guide",url:"https://www.youtube.com/watch?v=QnlZ7sZxoi8"}]},
+  {id:'pantanal',name:"Pantanal",category:"place",location:"Mato Grosso do Sul",julyTip:true,description:"Best place in South America for wildlife. Jaguars, giant river otters, capybaras. July is DRY SEASON — absolutely the best time to visit. Wildlife concentrates around water. SouthWild Pantanal Lodge is top-rated.",sources:[{type:"tt",label:"Beyond Rio",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"},{type:"yt",label:"18 Best Places",url:"https://www.youtube.com/watch?v=4P74A71BGA0"}]},
+  {id:'bonito',name:"Bonito",category:"place",location:"Mato Grosso do Sul",julyTip:true,description:"Crystal-clear rivers, snorkeling with hundreds of fish. Rio da Prata and Baía Bonita are standout experiences. Very controlled eco-tourism — book MONTHS ahead, especially for July. Spots fill up fast.",sources:[{type:"tt",label:"Beyond Rio spots",url:"https://www.tiktok.com/@efultimatebreak/video/7553405681404005645"}]},
+  {id:'jalapao',name:"Jalapeão",category:"place",location:"Tocantins",description:"Hidden gem bigger than many European countries — virtually no foreign tourists. Fervedouros (natural springs you float in), red sand dunes, canyons. Off the beaten path. Requires renting a 4WD.",sources:[{type:"tt",label:"Hidden Jalapeão",url:"https://www.tiktok.com/@laly_belulle/video/7555548376943774998"}]},
+  {id:'bombinhas',name:"Bombinhas Peninsula",category:"place",location:"Santa Catarina",description:"Mirante Eco 360° has sweeping views of Zimbros Bay. Praia da Tainha west-facing for sunsets. Protected and largely undeveloped — genuinely unspoiled. Great for a scenic detour.",sources:[{type:"ig",label:"Santa Catarina views",url:"https://www.instagram.com/p/DWvs2iLjsxB/"},{type:"ig",label:"Sunset at Tainha",url:"https://www.instagram.com/p/DWuXRKUj-VU/"}]},
+  {id:'miramar-windsor',name:"Miramar by Windsor Copacabana",category:"stay",location:"Rio de Janeiro",description:"Budget-smart hotel on the Copacabana strip. Strategy: stay here (good value), then Uber to Ipanema/Leblon for the day. Well-located for all major attractions.",sources:[{type:"ig",label:"Rio hotel tip",url:"https://www.instagram.com/p/DWwYKXDCDvQ/"}]},
+  {id:'grand-hyatt',name:"Grand Hyatt Rio de Janeiro",category:"stay",location:"Rio de Janeiro",description:"Quiet luxury beach vibes further from tourist crowds. Good for a splurge night or two. Arena Leme Hotel is the more budget-friendly in-the-mix alternative.",sources:[{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
+  {id:'picinguaba',name:"Pousada Picinguaba",category:"stay",location:"São Paulo coast",description:"Boutique eco-hotel in Atlantic Forest. Organic ingredients, just-caught seafood. Lunch with ocean views, dinner under stars. Farm-to-table and sea-to-plate philosophy. One of Brazil's most special stays.",sources:[{type:"ig",label:"Picinguaba post",url:"https://www.instagram.com/p/DWwkt9yEgG8/"}]},
+  {id:'rosewood-sp',name:"Rosewood São Paulo",category:"stay",location:"São Paulo",description:"Century-old maternity hospital redesigned by Jean Nouvel — brutalist concrete meets tropical gardens. One of South America's most architecturally extraordinary luxury hotels.",sources:[{type:"ig",label:"Rosewood review",url:"https://www.instagram.com/p/DWuoC6aD7-8/"}]},
+  {id:'barra-ap204',name:"Apartment 204 Barra — Salvador",category:"stay",location:"Salvador, Bahia",description:"Rooftop pool with city+ocean views, sauna, gym, elegant shared spaces. Barra neighborhood — 5 min to beach. From 3-night minimum. Good for a group stay.",sources:[{type:"ig",label:"Salvador Airbnb",url:"https://www.instagram.com/p/DWubMf5jmSh/"}]},
+  {id:'amazon-lodge',name:"Amazon Jungle Lodge (from Manaus)",category:"stay",location:"Amazonas",description:"All-inclusive jungle lodge packages from Manaus. Fresh regional meals included. WiFi + AC but expect daily power cuts. @amazonbraziljungle.tourr highly recommended.",sources:[{type:"ig",label:"Amazon 4-day guide",url:"https://www.instagram.com/p/DWY2fA8COI0/"}]},
+  {id:'fogo-chao',name:"Fogo de Chão — Churrasco",category:"food",location:"Multiple cities",description:"The definitive Brazilian steakhouse experience — all-you-can-eat churrasco with tableside meat service. Available in Rio, São Paulo, and other major cities. Non-negotiable for a Brazil trip.",sources:[{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
+  {id:'acaraje',name:"Acarajé in Salvador",category:"food",location:"Salvador, Bahia",description:"Deep-fried black-eyed pea fritters with vatapá filling, sold by Bahianas in traditional white dress. An Afro-Brazilian street food icon. Get it from Dinha in Rio Vermelho — the most authentic in the city.",sources:[{type:"yt",label:"10 Best Places in Salvador",url:"https://www.youtube.com/watch?v=3Qe4iVpyeso"}]},
+  {id:'seafood-picinguaba',name:"Seafood at Picinguaba",category:"food",location:"São Paulo coast",description:"Just-caught fish, organic produce, farm-to-table. 'Sea to plate isn't a trend here, it's just life.' Lunch with ocean views at Pousada Picinguaba. One of the freshest meals you'll have in Brazil.",sources:[{type:"ig",label:"Picinguaba seafood",url:"https://www.instagram.com/p/DWwkt9yEgG8/"}]},
+  {id:'amazonian-cuisine',name:"Amazonian Cuisine",category:"food",location:"Amazon region",description:"Unique flavors — tucunaré fish, açaí straight from source, cupuaçu. Gastrobrazil.com and atable.br offer curated food tours connecting you with indigenous Brazilian ingredients.",sources:[{type:"ig",label:"Gastro Brazil",url:"https://www.instagram.com/p/DWuPGQ7D4Dg/"}]},
+  {id:'havaianas-flagship',name:"Havaianas Flagship Ipanema",category:"food",location:"Rio de Janeiro",description:"Three-floor store with every color + custom options. Significantly cheaper than abroad. The definitive place to buy authentic Havaianas. Also check out Farm Rio (30–50% cheaper than US prices) nearby.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'natura',name:"Natura Beauty Products",category:"food",location:"Rio de Janeiro / Brazil",description:"The Natura seve vanilla body oil is a must-buy Brazil staple. Brazilian beauty products significantly cheaper than abroad. Widely available across Rio.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+  {id:'evisa',name:"Brazilian eVisa — Get It First",category:"other",location:"Before you go",description:"Required for most international visitors. Apply when you book your flight — can take time. About $80 USD, valid for 10 years. MULTIPLE TikTok creators flag this as the #1 logistical tip. Don't leave it to the last minute.",sources:[{type:"tt",label:"eVisa tip",url:"https://www.tiktok.com/@mercedes.beverly/video/7592129346589052174"},{type:"tt",label:"Steal my Rio itinerary",url:"https://www.tiktok.com/@sojournies/video/7584844769386384695"}]},
+  {id:'safety-rio',name:"Safety in Rio — What NOT to Bring",category:"other",location:"Rio de Janeiro",description:"Don't wear expensive jewelry/watches. Keep your good phone inside — use an old or cheap one. Carry only the cash you need. Uber is safe and recommended over taxis. Be aware in busy tourist areas at night.",sources:[{type:"tt",label:"What NOT to bring",url:"https://www.tiktok.com/@luluvess/video/7602393283888745730"},{type:"tt",label:"5 safety tips",url:"https://www.tiktok.com/@itsimplyeve/video/7285472588908727584"},{type:"yt",label:"What tourists should know",url:"https://www.youtube.com/watch?v=NXtnHGvhIQg"}]},
+  {id:'one-carioca',name:"One Carioca Day (Rio Experiences)",category:"other",location:"Rio de Janeiro",description:"Local operator for unique Rio: altinha football lessons, Morro Dois Irmãos sunrise hike, waterfall treks, Guanabara Bay boat tours, surf lessons. Great for active travelers who want more than sightseeing.",sources:[{type:"ig",label:"One Carioca Day",url:"https://www.instagram.com/p/DWugjl3iSJZ/"}]},
+  {id:'gol-flight',name:"GOL Airlines NYC → Rio Direct",category:"other",location:"New York / Rio de Janeiro",description:"GOL is launching the first-ever nonstop flight between New York and Rio — a major change for US travelers to Brazil. Significantly cuts total travel time from the East Coast. Check for July availability.",sources:[{type:"ig",label:"GOL flight announcement",url:"https://www.instagram.com/p/DWuPS81CIA9/"}]},
+  {id:'carnival-samba',name:"Rio Carnival & Samba Culture",category:"other",location:"Rio de Janeiro",description:"No Carnival in July, but samba schools run throughout the year. Visit the Sambódromo for context. Lapa neighborhood on weekends has live samba clubs — authentic and electric.",sources:[{type:"ig",label:"Carnival champion post",url:"https://www.instagram.com/p/DWwY1uujX1X/"}]},
+  {id:'piranha-fishing',name:"Piranha Fishing (Amazon)",category:"other",location:"Amazonas",description:"A true jungle experience — less dangerous than they sound and hugely memorable. Part of most multi-day Amazon packages from Manaus. Usually paired with night caiman spotting.",sources:[{type:"ig",label:"Amazon tour",url:"https://www.instagram.com/p/DWY2fA8COI0/"},{type:"tt",label:"Brazil bucket list",url:"https://www.tiktok.com/@passportarchives/video/7622711394512784671"}]},
+  {id:'farm-rio-shopping',name:"Farm Rio & Rio Shopping",category:"other",location:"Rio de Janeiro",description:"Farm Rio flagship in Ipanema — 30–50% cheaper than US. Praça do Lido in Copacabana: handmade leather bags. Copacabana Night Market: jerseys, gifts. Saturday: Feira do Lavradio antiques market.",sources:[{type:"tt",label:"Shopping in Rio",url:"https://www.tiktok.com/@butteronaroll_/video/7584173749583269175"}]},
+];
+
+// ═══════════════════════════════════════════
+// STATE & STORAGE
+// ═══════════════════════════════════════════
+const ADMIN_PIN = '2025';
+const TRIP_DAYS = ['Jul 1','Jul 2','Jul 3','Jul 4','Jul 5','Jul 6','Jul 7','Jul 8','Jul 9','Jul 10','Jul 11','Jul 12','Jul 13','Jul 14'];
+const MEMBER_COLORS = ['#2d7a4a','#c8552a','#3a8ab0','#7a5aaa','#e5b840','#1a4a28'];
+const MEMBER_EMOJIS = ['🌴','🍹','🦜','🌊','🎭','🐆'];
+const DEFAULT_MEMBERS = ['Prity','Friend 2','Friend 3','Friend 4','Friend 5','Friend 6'];
+
+function ls(k){try{return JSON.parse(localStorage.getItem(k))}catch{return null}}
+function lsSet(k,v){localStorage.setItem(k,JSON.stringify(v))}
+
+let currentUser = ls('brazil_user') || null;
+let currentFilter = 'all';
+let currentSearch = '';
+let openItemId = null;
+let activeDay = 0;
+
+const getVotes = () => ls('brazil_votes') || {};
+const getSaves = () => ls('brazil_saves_'+(currentUser?.name||'')) || [];
+// ─── SHARED ITINERARY SYNC ───
+// Uses JSONBin.io as a free shared key-value store.
+// All group members read/write the same bin.
+// Fallback: localStorage if offline or no bin configured.
+const SYNC_KEY = 'brazil_sync_bin';
+let _sharedItin = null;
+let _syncTimer = null;
+
+function getSyncBin() { return ls(SYNC_KEY) || null; }
+
+async function fetchSharedItin() {
+  const bin = getSyncBin();
+  if (!bin || !bin.id) { setSyncStatus(false); return ls('brazil_itinerary') || {}; }
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${bin.id}/latest`, {
+      headers: bin.key ? {'X-Master-Key': bin.key} : {}
+    });
+    if (!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    const itin = data.record?.itinerary || {};
+    lsSet('brazil_itinerary', itin); // cache locally
+    setSyncStatus(true);
+    return itin;
+  } catch(e) {
+    setSyncStatus(false);
+    return ls('brazil_itinerary') || {};
+  }
+}
+
+async function pushSharedItin(itin) {
+  lsSet('brazil_itinerary', itin); // always save locally first
+  const bin = getSyncBin();
+  if (!bin) return;
+  setSyncSaving();
+  try {
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${bin.id}`, {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json', ...(bin.key?{'X-Master-Key':bin.key}:{})},
+      body: JSON.stringify({itinerary: itin})
+    });
+    if (r.ok) { setSyncStatus(true); showNotify('✅ Itinerary synced with group'); }
+    else throw new Error(r.status);
+  } catch(e) { setSyncStatus(false); }
+}
+
+function setSyncStatus(live) {
+  const dot = document.getElementById('syncDot');
+  const txt = document.getElementById('syncStatus');
+  if (!dot) return;
+  dot.className = 'sync-dot' + (live ? ' live' : '');
+  txt.textContent = live ? 'Live — synced with group' : getSyncBin() ? 'Offline — changes saved locally' : 'Local only — add JSONBin ID in Admin to share';
+}
+function setSyncSaving() {
+  const dot = document.getElementById('syncDot');
+  const txt = document.getElementById('syncStatus');
+  if (!dot) return;
+  dot.className = 'sync-dot saving';
+  txt.textContent = 'Saving…';
+}
+
+function startSyncPolling() {
+  if (_syncTimer) clearInterval(_syncTimer);
+  _syncTimer = setInterval(async () => {
+    const itin = await fetchSharedItin();
+    _sharedItin = itin;
+    if (document.getElementById('viewPlanner')?.classList.contains('active')) renderPlanner();
+  }, 15000); // poll every 15s
+}
+
+const getItinerary = () => ls('brazil_itinerary') || {};
+const getMembers = () => ls('brazil_members') || DEFAULT_MEMBERS;
+const getHashtags = () => ls('brazil_hashtags') || {
+  ig:['braziltravel','visitbrazil','travelbrazil','salvadorbahia','amazontour','riodejaneiro'],
+  tt:['braziltravel','visitbrazil','riodejaneiro','amazontour'],
+  yt:['Brazil travel guide itinerary','Rio de Janeiro travel tips','Amazon Brazil tour']
+};
+
+// ═══════════════════════════════════════════
+// LOGIN
+// ═══════════════════════════════════════════
+let loginPin = '';
+let loginSelectedUser = null;
+
+function initLogin() {
+  if (currentUser) { showApp(); return; }
+  renderAvatars();
+  renderPinDisplay();
+  renderNumpad();
+}
+
+function renderAvatars() {
+  const members = getMembers();
+  document.getElementById('avatarPicker').innerHTML = members.map((m,i) => `
+    <div style="text-align:center">
+      <div class="avatar ${loginSelectedUser===m?'selected':''}" 
+           style="background:${MEMBER_COLORS[i%MEMBER_COLORS.length]}20;border:2px solid ${MEMBER_COLORS[i%MEMBER_COLORS.length]}50"
+           onclick="selectUser('${m}',${i})">
+        <span style="font-size:24px">${MEMBER_EMOJIS[i%MEMBER_EMOJIS.length]}</span>
+      </div>
+      <div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px">${m}</div>
+    </div>
+  `).join('');
+}
+
+function selectUser(name, idx) {
+  loginSelectedUser = name;
+  loginPin = '';
+  renderAvatars();
+  renderPinDisplay();
+  document.getElementById('pinError').textContent = '';
+}
+
+function renderPinDisplay() {
+  document.getElementById('pinDisplay').innerHTML = [0,1,2,3].map(i =>
+    `<div class="pin-dot ${i < loginPin.length ? 'filled' : ''}"></div>`
+  ).join('');
+}
+
+function renderNumpad() {
+  const nums = [1,2,3,4,5,6,7,8,9,'','0','⌫'];
+  document.getElementById('numpad').innerHTML = nums.map(n => {
+    if(n==='') return '<div></div>';
+    const cls = n==='⌫'?'num-btn back':'num-btn';
+    return `<button class="${cls}" onclick="pinInput('${n}')">${n}</button>`;
+  }).join('');
+}
+
+function pinInput(k) {
+  if (!loginSelectedUser) { document.getElementById('pinError').textContent='Select your name first'; return; }
+  if (k==='⌫') { loginPin=loginPin.slice(0,-1); renderPinDisplay(); return; }
+  if (loginPin.length>=4) return;
+  loginPin += k;
+  renderPinDisplay();
+  if (loginPin.length===4) checkPin();
+}
+
+function checkPin() {
+  if (loginPin !== ADMIN_PIN) {
+    document.getElementById('pinError').textContent = 'Wrong PIN — try 2025';
+    loginPin = '';
+    setTimeout(renderPinDisplay, 500);
+    return;
+  }
+  const members = getMembers();
+  const existingIdx = members.indexOf(loginSelectedUser);
+  const name = loginSelectedUser;
+  const idx = existingIdx>=0 ? existingIdx : 0;
+  
+  if (name === 'Friend 2' || name === 'Friend 3' || name === 'Friend 4' || name === 'Friend 5' || name === 'Friend 6') {
+    // Show name setup for generic names
+    document.getElementById('loginPhase1').style.display='none';
+    document.getElementById('loginPhase2').style.display='block';
+    document.getElementById('loginSub').textContent='One last thing before you join';
+  } else {
+    loginSuccess(name, idx);
+  }
+}
+
+function confirmName() {
+  const name = document.getElementById('nameInput').value.trim();
+  if (!name) return;
+  const members = getMembers();
+  const idx = members.indexOf(loginSelectedUser);
+  if (idx>=0) members[idx] = name;
+  lsSet('brazil_members', members);
+  loginSuccess(name, idx>=0?idx:0);
+}
+
+function loginSuccess(name, idx) {
+  currentUser = {name, idx, color:MEMBER_COLORS[idx%MEMBER_COLORS.length], emoji:MEMBER_EMOJIS[idx%MEMBER_EMOJIS.length]};
+  lsSet('brazil_user', currentUser);
+  showApp();
+}
+
+async function showApp() {
+  document.getElementById('loginScreen').classList.add('hidden');
+  const ui = document.getElementById('userIndicator');
+  ui.style.display='flex';
+  document.getElementById('userEmoji').textContent = currentUser.emoji;
+  document.getElementById('userName').textContent = currentUser.name;
+  renderCards();
+  renderPoll();
+  // Load shared itinerary then render planner
+  const itin = await fetchSharedItin();
+  lsSet('brazil_itinerary', itin);
+  renderPlanner();
+  renderAdmin();
+  startSyncPolling();
+}
+
+// ═══════════════════════════════════════════
+// DISCOVER
+// ═══════════════════════════════════════════
+const catColors = {place:'linear-gradient(90deg,#2d7a4a,#8fce78)',stay:'linear-gradient(90deg,#3a8ab0,#70c0e0)',food:'linear-gradient(90deg,#c8552a,#f0a030)',other:'linear-gradient(90deg,#7a5aaa,#b090e0)'};
+const catLabels = {place:'🗺 Place / City',stay:'🏨 Hotel / Stay',food:'🍽 Food & Dining',other:'💡 Tip & Experience'};
+const srcLabel = {ig:'📸 Instagram',tt:'🎵 TikTok',yt:'▶ YouTube'};
+const srcClass = {ig:'src-ig',tt:'src-tt',yt:'src-yt'};
+
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  document.querySelector(`.chip[data-f="${f}"]`).classList.add('on');
+  renderCards();
+}
+
+function renderCards() {
+  const q = (document.getElementById('searchInput')?.value||'').toLowerCase();
+  const votes = getVotes();
+  const saves = getSaves();
+  const filtered = TRAVEL_DATA.filter(d => {
+    const mCat = currentFilter==='all' || d.category===currentFilter;
+    const mQ = !q || d.name.toLowerCase().includes(q) || d.description.toLowerCase().includes(q) || (d.location||'').toLowerCase().includes(q);
+    return mCat && mQ;
+  });
+
+  const counts = {place:0,stay:0,food:0,other:0};
+  TRAVEL_DATA.forEach(d=>counts[d.category]++);
+  document.getElementById('sTotal').textContent = TRAVEL_DATA.length;
+  document.getElementById('sPlace').textContent = counts.place;
+  document.getElementById('sStay').textContent = counts.stay;
+  document.getElementById('sFood').textContent = counts.food;
+
+  const cl = document.getElementById('cardsList');
+  if(!filtered.length){cl.innerHTML='<div class="empty-state"><div class="em2">🔍</div><p>No results.<br>Try a different search.</p></div>';return;}
+  cl.innerHTML = filtered.map(d => {
+    const v = votes[d.id]||0;
+    const saved = saves.includes(d.id);
+    return `<div class="card cat-${d.category}" onclick="openModal('${d.id}')">
+      <div class="card-stripe"></div>
+      <div class="card-inner">
+        <div class="card-head">
+          <div class="card-name">${d.name}</div>
+          <div class="cat-dot"></div>
+        </div>
+        <div class="card-loc">📍 ${d.location||''}${d.julyTip?' · <span style="color:#2d7a4a;font-weight:600">☀️ July pick</span>':''}</div>
+        <div class="card-desc">${d.description.slice(0,130)}${d.description.length>130?'…':''}</div>
+        <div class="card-footer">
+          <div class="card-sources">${d.sources.slice(0,3).map(s=>`<span class="src-badge ${srcClass[s.type]}">${s.type.toUpperCase()}</span>`).join('')}</div>
+          <div class="vote-row">
+            <button class="save-btn" onclick="event.stopPropagation();toggleSaveId('${d.id}')">${saved?'⭐':'☆'}</button>
+            <button class="vote-btn" onclick="event.stopPropagation();voteId('${d.id}')">👍</button>
+            <span class="vote-count">${v}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════
+function openModal(id) {
+  openItemId = id;
+  const d = TRAVEL_DATA.find(x=>x.id===id);
+  if(!d) return;
+  const votes = getVotes();
+  const saves = getSaves();
+  const saved = saves.includes(id);
+  const voted = (votes[id+'_voters']||[]).includes(currentUser?.name);
+
+  document.getElementById('mAccent').style.background = catColors[d.category];
+  document.getElementById('mCat').textContent = catLabels[d.category];
+  document.getElementById('mCat').style.color = {place:'#1a5a30',stay:'#1a4a6a',food:'#8a2810',other:'#4a2a7a'}[d.category];
+  document.getElementById('mName').textContent = d.name;
+  document.getElementById('mLoc').textContent = d.location ? '📍 '+d.location : '';
+  document.getElementById('mDesc').textContent = d.description;
+  document.getElementById('mJulyBadge').innerHTML = d.julyTip ? '<div class="july-badge">☀️ July trip highlight</div>' : '';
+  document.getElementById('mSources').innerHTML = d.sources.map(s=>`
+    <a href="${s.url}" target="_blank" class="modal-src-link ${s.type}">
+      <span>${srcLabel[s.type]}</span>
+      <span class="modal-src-label">${s.label}</span>
+      <span class="modal-src-arr">→</span>
+    </a>`).join('');
+
+  const sb = document.getElementById('mSaveBtn');
+  sb.textContent = saved ? '⭐ Saved' : '⭐ Save';
+  sb.className = 'modal-action-btn modal-save-btn'+(saved?' saved':'');
+
+  const vb = document.getElementById('mVoteBtn');
+  vb.textContent = voted ? '👍 Voted' : '👍 Vote';
+  vb.className = 'modal-action-btn modal-vote-btn'+(voted?' voted':'');
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function handleOverlayClick(e) {
+  if(e.target===document.getElementById('modalOverlay')) closeModal();
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  openItemId=null;
+}
+
+function toggleSave() {
+  if(openItemId) toggleSaveId(openItemId);
+  const saves = getSaves();
+  const saved = saves.includes(openItemId);
+  const sb = document.getElementById('mSaveBtn');
+  sb.textContent = saved ? '⭐ Saved' : '⭐ Save';
+  sb.className = 'modal-action-btn modal-save-btn'+(saved?' saved':'');
+}
+
+function toggleSaveId(id) {
+  if(!currentUser){showNotify('Log in first');return;}
+  const key = 'brazil_saves_'+currentUser.name;
+  const saves = ls(key)||[];
+  const idx = saves.indexOf(id);
+  if(idx>=0) saves.splice(idx,1); else saves.push(id);
+  lsSet(key, saves);
+  renderCards();
+  renderPlanner();
+  showNotify(idx>=0 ? '☆ Removed from saves' : '⭐ Saved!');
+}
+
+function toggleVoteModal() {
+  if(openItemId) voteId(openItemId);
+  const votes = getVotes();
+  const voted = (votes[openItemId+'_voters']||[]).includes(currentUser?.name);
+  const vb = document.getElementById('mVoteBtn');
+  vb.textContent = voted ? '👍 Voted' : '👍 Vote';
+  vb.className = 'modal-action-btn modal-vote-btn'+(voted?' voted':'');
+}
+
+function voteId(id) {
+  if(!currentUser){showNotify('Log in first');return;}
+  const votes = getVotes();
+  const voterKey = id+'_voters';
+  const voters = votes[voterKey]||[];
+  const idx = voters.indexOf(currentUser.name);
+  if(idx>=0){voters.splice(idx,1);votes[id]=Math.max(0,(votes[id]||0)-1);}
+  else{voters.push(currentUser.name);votes[id]=(votes[id]||0)+1;}
+  votes[voterKey]=voters;
+  lsSet('brazil_votes',votes);
+  renderCards();
+  renderPoll();
+  showNotify(idx>=0 ? 'Vote removed' : '👍 Voted!');
+}
+
+function addToPlanner() {
+  if(!openItemId) return;
+  const list = document.getElementById('dayPickerList');
+  list.innerHTML = TRIP_DAYS.map((d,i)=>`
+    <button onclick="addItemToDay(${i});document.getElementById('dayPickerOverlay').classList.remove('open')" 
+      style="width:100%;text-align:left;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink)">
+      ${d}
+    </button>`).join('');
+  document.getElementById('dayPickerOverlay').classList.add('open');
+}
+
+async function addItemToDay(dayIdx) {
+  if(!openItemId||!currentUser) return;
+  const itin = getItinerary();
+  if(!itin[dayIdx]) itin[dayIdx]=[];
+  const alreadyIn = itin[dayIdx].some(e=>(typeof e==='string'?e:e.id)===openItemId);
+  if(!alreadyIn) {
+    itin[dayIdx].push({id:openItemId, addedBy:currentUser.name, addedAt:Date.now()});
+  }
+  await pushSharedItin(itin);
+  renderPlanner();
+  showNotify(`📅 Added to ${TRIP_DAYS[dayIdx]}!`);
+}
+
+// ═══════════════════════════════════════════
+// PLANNER — SHARED GROUP ITINERARY
+// ═══════════════════════════════════════════
+const catAccents = {place:'#2d7a4a',stay:'#3a8ab0',food:'#c8552a',other:'#7a5aaa'};
+
+function renderPlanner() {
+  const itin = getItinerary();
+  // Day tabs
+  document.getElementById('dayTabs').innerHTML = TRIP_DAYS.slice(0,12).map((d,i)=>`
+    <div class="date-chip ${activeDay===i?'active':''}" onclick="setDay(${i})">${d}</div>`).join('');
+
+  // Active day header
+  const items = itin[activeDay]||[];
+  document.getElementById('dayLabel').textContent = TRIP_DAYS[activeDay];
+  document.getElementById('dayCount').textContent = `${items.length} place${items.length!==1?'s':''}`;
+
+  // Plan slots — each entry: {id, addedBy} or legacy string
+  const slotsEl = document.getElementById('planSlots');
+  if(!items.length){
+    slotsEl.innerHTML='<div class="plan-empty">No places yet — tap 📅 on any card, or use your wishlist below</div>';
+  } else {
+    slotsEl.innerHTML = items.map((entry) => {
+      const id = typeof entry==='string'?entry:entry.id;
+      const addedBy = typeof entry==='object'?entry.addedBy:'';
+      const d = TRAVEL_DATA.find(x=>x.id===id);
+      if(!d) return '';
+      return `<div class="plan-item">
+        <div class="plan-item-accent" style="background:${catAccents[d.category]||'#888'}"></div>
+        <div class="plan-item-left">
+          <div class="plan-item-name">${d.name}</div>
+          <div class="plan-item-meta">
+            📍 ${d.location||''}
+            ${addedBy?`<span class="plan-item-added-by">${addedBy}</span>`:''}
+          </div>
+        </div>
+        <button class="plan-remove" onclick="removeFromDay(${activeDay},'${id}')" title="Remove from this day">✕</button>
+      </div>`;
+    }).join('');
+  }
+
+  // Wishlist (private per user, shown below for easy drag to days)
+  const saves = getSaves();
+  const inPlanIds = items.map(e=>typeof e==='string'?e:e.id);
+  const savedEl = document.getElementById('savedGrid');
+  if(!saves.length){
+    savedEl.innerHTML='<div class="empty-plan"><div class="em">⭐</div><p>Save places from Discover<br>they appear here for easy planning</p></div>';
+    return;
+  }
+  savedEl.innerHTML = `<div class="saved-grid">${saves.map(id=>{
+    const d=TRAVEL_DATA.find(x=>x.id===id);if(!d)return'';
+    const inPlan=inPlanIds.includes(id);
+    return `<div class="saved-card" onclick="openModal('${id}')" style="${inPlan?'opacity:.5':''}">
+      <div class="saved-card-name">${d.name}</div>
+      <div class="saved-card-loc">📍 ${d.location||''}</div>
+      <div class="saved-card-actions">
+        ${inPlan
+          ? '<span style="font-size:11px;color:var(--leaf);font-weight:500">✓ In plan</span>'
+          : `<button class="add-to-day-btn" onclick="event.stopPropagation();openItemId='${id}';addToPlanner()">+ Add to ${TRIP_DAYS[activeDay]}</button>`
+        }
+        <button class="unsave-btn" onclick="event.stopPropagation();toggleSaveId('${id}')">✕</button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function setDay(i) { activeDay=i; renderPlanner(); }
+
+async function removeFromDay(dayIdx,id) {
+  const itin=getItinerary();
+  if(itin[dayIdx]) itin[dayIdx]=itin[dayIdx].filter(e=>(typeof e==='string'?e:e.id)!==id);
+  await pushSharedItin(itin);
+  renderPlanner();
+}
+
+
+// ═══════════════════════════════════════════
+// POLL
+// ═══════════════════════════════════════════
+function renderPoll() {
+  const votes = getVotes();
+  const maxVotes = Math.max(1,...TRAVEL_DATA.map(d=>votes[d.id]||0));
+  const sorted = [...TRAVEL_DATA].sort((a,b)=>(votes[b.id]||0)-(votes[a.id]||0));
+  document.getElementById('pollList').innerHTML = sorted.map(d=>{
+    const v = votes[d.id]||0;
+    const pct = Math.round((v/maxVotes)*100);
+    const voted = (votes[d.id+'_voters']||[]).includes(currentUser?.name);
+    return `<div class="poll-card">
+      <div class="poll-name">${d.name}</div>
+      <div class="poll-loc">📍 ${d.location||''}</div>
+      <div class="poll-bar-wrap"><div class="poll-bar" style="width:${v?pct:0}%"></div></div>
+      <div class="poll-footer">
+        <span class="poll-votes">${v} vote${v!==1?'s':''}</span>
+        <button class="poll-vote-btn ${voted?'voted':''}" onclick="voteId('${d.id}')">
+          👍 ${voted?'Voted':'Vote'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════
+function renderAdmin() {
+  const ht = getHashtags();
+  renderTagList('ig');
+  renderTagList('tt');
+  renderTagList('yt');
+  const keys = ls('brazil_keys')||{};
+  if(keys.apify) document.getElementById('apifyKey').value='••••••••';
+  if(keys.claude) document.getElementById('claudeKey').value='••••••••';
+
+  // Users list
+  const members = getMembers();
+  document.getElementById('usersList').innerHTML = members.map((m,i)=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg);border-radius:10px">
+      <span style="font-size:20px">${MEMBER_EMOJIS[i]}</span>
+      <span style="font-size:14px;flex:1">${m}</span>
+      ${m===currentUser?.name?'<span style="font-size:11px;color:var(--leaf);font-weight:600">You</span>':''}
+    </div>`).join('');
+}
+
+function renderTagList(source) {
+  const ht = getHashtags();
+  const el = document.getElementById(source+'TagList');
+  el.innerHTML = ht[source].map((t,i)=>`
+    <span class="tag-item">${source==='yt'?'':('#')}${t}<button class="tag-remove" onclick="removeTag('${source}',${i})">✕</button></span>`).join('');
+}
+
+function addTag(source) {
+  const input = document.getElementById(source+'TagInput');
+  const val = input.value.trim().replace(/^#/,'');
+  if(!val) return;
+  const ht = getHashtags();
+  if(!ht[source].includes(val)) { ht[source].push(val); lsSet('brazil_hashtags',ht); }
+  input.value='';
+  renderTagList(source);
+}
+
+function removeTag(source, idx) {
+  const ht = getHashtags();
+  ht[source].splice(idx,1);
+  lsSet('brazil_hashtags',ht);
+  renderTagList(source);
+}
+
+function saveSyncConfig() {
+  const binId = document.getElementById('jsonbinId').value.trim();
+  const binKey = document.getElementById('jsonbinKey').value.trim();
+  if(!binId) { showNotify('⚠️ Paste your JSONBin Bin ID first'); return; }
+  lsSet(SYNC_KEY, {id:binId, key:binKey||null});
+  showNotify('✅ Sync connected! Itinerary now shared across all devices');
+  fetchSharedItin().then(itin => { lsSet('brazil_itinerary',itin); renderPlanner(); setSyncStatus(true); });
+}
+
+function saveKeys() {
+  const ak = document.getElementById('apifyKey').value;
+  const ck = document.getElementById('claudeKey').value;
+  const keys = ls('brazil_keys')||{};
+  if(ak && !ak.startsWith('•')) keys.apify = ak;
+  if(ck && !ck.startsWith('•')) keys.claude = ck;
+  lsSet('brazil_keys', keys);
+  showNotify('✅ Keys saved locally');
+}
+
+function log(msg, type='info') {
+  const el = document.getElementById('scrapeLog');
+  el.style.display='block';
+  el.innerHTML += `<div class="log-${type}">${new Date().toLocaleTimeString()} ${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+
+function setProgress(pct) {
+  document.getElementById('progressBar').style.display='block';
+  document.getElementById('progressFill').style.width=pct+'%';
+}
+
+async function runScrape() {
+  const keys = ls('brazil_keys')||{};
+  if(!keys.apify || !keys.claude) {
+    showNotify('⚠️ Add API keys in Admin first');
+    return;
+  }
+  const btn = document.getElementById('scrapeBtn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span> Scraping…';
+  document.getElementById('scrapeLog').innerHTML='';
+  setProgress(5);
+
+  const ht = getHashtags();
+  const limit = parseInt(document.getElementById('scrapeLimit').value)||30;
+  let allCaptions = [];
+
+  try {
+    // Instagram
+    if(document.getElementById('srcIg').checked) {
+      log('🔍 Starting Instagram scrape…');
+      const igUrls = ht.ig.map(t=>`https://www.instagram.com/explore/tags/${t}/`);
+      const igResp = await fetch(`https://api.apify.com/v2/acts/apify~instagram-scraper/runs?token=${keys.apify}`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({directUrls:igUrls, resultsLimit:limit, resultsType:'posts'})
+      });
+      if(igResp.ok) {
+        const igRun = await igResp.json();
+        const runId = igRun.data?.id;
+        if(runId) {
+          log(`📸 Instagram run started: ${runId}`, 'ok');
+          // Poll until done
+          let status = 'RUNNING';
+          let attempts = 0;
+          while(status === 'RUNNING' && attempts < 30) {
+            await new Promise(r=>setTimeout(r,4000));
+            const statusResp = await fetch(`https://api.apify.com/v2/acts/apify~instagram-scraper/runs/${runId}?token=${keys.apify}`);
+            const statusData = await statusResp.json();
+            status = statusData.data?.status;
+            attempts++;
+          }
+          if(status === 'SUCCEEDED') {
+            const dsId = igRun.data?.defaultDatasetId;
+            const dataResp = await fetch(`https://api.apify.com/v2/datasets/${dsId}/items?fields=caption,locationName,url&token=${keys.apify}`);
+            const posts = await dataResp.json();
+            const captions = posts.filter(p=>p.caption&&p.caption.length>30).map(p=>({text:p.caption,loc:p.locationName,url:p.url,src:'ig'}));
+            allCaptions.push(...captions);
+            log(`✅ Instagram: got ${captions.length} posts with content`, 'ok');
+          }
+        }
+      }
+    }
+    setProgress(40);
+
+    // TikTok
+    if(document.getElementById('srcTt').checked) {
+      log('🎵 Starting TikTok scrape…');
+      try {
+        const ttResp = await fetch(`https://api.apify.com/v2/acts/clockworks~tiktok-scraper/runs?token=${keys.apify}`, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({hashtags:ht.tt, resultsPerPage:limit})
+        });
+        if(ttResp.ok) {
+          const ttRun = await ttResp.json();
+          log(`🎵 TikTok run started: ${ttRun.data?.id}`, 'ok');
+          let status='RUNNING', attempts=0;
+          while(status==='RUNNING' && attempts<30) {
+            await new Promise(r=>setTimeout(r,4000));
+            const s = await fetch(`https://api.apify.com/v2/acts/clockworks~tiktok-scraper/runs/${ttRun.data?.id}?token=${keys.apify}`);
+            status = (await s.json()).data?.status;
+            attempts++;
+          }
+          if(status==='SUCCEEDED') {
+            const dsId = ttRun.data?.defaultDatasetId;
+            const data = await (await fetch(`https://api.apify.com/v2/datasets/${dsId}/items?fields=text,webVideoUrl&token=${keys.apify}`)).json();
+            const filtered = data.filter(v=>v.text&&v.text.length>30).map(v=>({text:v.text,url:v.webVideoUrl,src:'tt'}));
+            allCaptions.push(...filtered);
+            log(`✅ TikTok: got ${filtered.length} videos with content`, 'ok');
+          }
+        }
+      } catch(e) { log(`⚠️ TikTok error: ${e.message}`, 'err'); }
+    }
+    setProgress(70);
+
+    // YouTube
+    if(document.getElementById('srcYt').checked) {
+      log('▶ Starting YouTube scrape…');
+      try {
+        const ytResp = await fetch(`https://api.apify.com/v2/acts/streamers~youtube-scraper/runs?token=${keys.apify}`, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({searchKeywords:ht.yt[0]||'Brazil travel guide', maxResults:limit, type:'search'})
+        });
+        if(ytResp.ok){
+          const ytRun = await ytResp.json();
+          let status='RUNNING', attempts=0;
+          while(status==='RUNNING'&&attempts<30){
+            await new Promise(r=>setTimeout(r,4000));
+            status=(await (await fetch(`https://api.apify.com/v2/acts/streamers~youtube-scraper/runs/${ytRun.data?.id}?token=${keys.apify}`)).json()).data?.status;
+            attempts++;
+          }
+          if(status==='SUCCEEDED'){
+            const data=await(await fetch(`https://api.apify.com/v2/datasets/${ytRun.data?.defaultDatasetId}/items?fields=title,description,url&token=${keys.apify}`)).json();
+            const filtered=data.filter(v=>(v.description||'').length>50).map(v=>({text:(v.title||'')+' '+v.description,url:v.url,src:'yt'}));
+            allCaptions.push(...filtered);
+            log(`✅ YouTube: got ${filtered.length} videos`, 'ok');
+          }
+        }
+      } catch(e){log(`⚠️ YouTube error: ${e.message}`,'err');}
+    }
+    setProgress(80);
+    log(`📊 Total raw content: ${allCaptions.length} pieces. Now calling Claude to categorize…`);
+
+    if(allCaptions.length > 0 && keys.claude) {
+      const prompt = `You are a Brazil travel content analyzer. I have ${allCaptions.length} scraped social media posts/videos about Brazil travel. 
+
+Here are the captions/descriptions:
+${allCaptions.slice(0,40).map((c,i)=>`[${i+1}] ${c.src.toUpperCase()} | ${c.text.slice(0,300)}`).join('\n\n')}
+
+Extract all named travel entities. For each, return ONLY JSON array (no markdown) with objects:
+{name, category ("place"|"stay"|"food"|"other"), location, description (2-3 sentences from content), isJulyRelevant (boolean), sources:[{type,label,url}]}
+
+Merge any that refer to the same place. Ignore non-Brazil content, promotional posts without info, and duplicates already in this list: ${TRAVEL_DATA.map(d=>d.name).join(', ')}
+
+Return ONLY the JSON array.`;
+
+      const claudeResp = await fetch('https://api.anthropic.com/v1/messages', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','x-api-key':keys.claude,'anthropic-version':'2023-06-01'},
+        body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+      });
+
+      if(claudeResp.ok) {
+        const claudeData = await claudeResp.json();
+        const text = claudeData.content?.[0]?.text||'';
+        try {
+          const clean = text.replace(/```json|```/g,'').trim();
+          const newItems = JSON.parse(clean);
+          if(Array.isArray(newItems) && newItems.length > 0) {
+            log(`🤖 Claude extracted ${newItems.length} new items`, 'ok');
+            // In a real deployment, these would be persisted to a backend DB
+            // For now, store in localStorage as "discovered" items
+            const existing = ls('brazil_discovered')||[];
+            const merged = [...existing, ...newItems.map(i=>({...i,id:'new-'+Date.now()+Math.random()}))];
+            lsSet('brazil_discovered', merged);
+            log(`✅ Saved ${newItems.length} new items. Refresh to see them.`, 'ok');
+          }
+        } catch(e){ log('⚠️ Could not parse Claude response — '+e.message,'err'); }
+      } else {
+        log(`⚠️ Claude API error: ${claudeResp.status}`,'err');
+      }
+    }
+
+    setProgress(100);
+    log(`🎉 Scrape complete! Raw: ${allCaptions.length} posts → new items extracted`, 'ok');
+    document.getElementById('adRaw').textContent = allCaptions.length;
+    document.getElementById('adLast').textContent = new Date().toLocaleDateString();
+
+  } catch(e) {
+    log(`❌ Error: ${e.message}`, 'err');
+  }
+  btn.disabled=false;
+  btn.textContent='Run scrape';
+}
+
+// ═══════════════════════════════════════════
+// NAV & UTILS
+// ═══════════════════════════════════════════
+function switchView(name) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('view'+name).classList.add('active');
+  document.getElementById('nb-'+name.toLowerCase()).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showNotify(msg) {
+  const el = document.getElementById('notify');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2200);
+}
+
+function clearVotes() { if(confirm('Clear all votes?')){lsSet('brazil_votes',{});renderCards();renderPoll();showNotify('Votes cleared');} }
+function resetApp() { if(confirm('Reset ALL app data? This cannot be undone.')){localStorage.clear();location.reload();} }
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+initLogin();
+</script>
+</body>
+</html>
