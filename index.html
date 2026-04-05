@@ -30,8 +30,9 @@
   --border: rgba(0,0,0,0.08);
   --shadow: 0 2px 16px rgba(0,0,0,0.08);
   --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
-  --st: env(safe-area-inset-top,0px);
-  --sb: env(safe-area-inset-bottom,0px);
+  /* Safe area vars — set by JS on load for reliable cross-device support */
+  --sat: 54px;  /* top: generous default covers all notch/dynamic island iPhones */
+  --sab: 34px;  /* bottom: generous default covers home indicator iPhones */
   --radius: 18px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -43,14 +44,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .view.active{display:block}
 
 /* ── NAV ── */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:max(var(--sb),8px);z-index:200;box-shadow:0 -4px 24px rgba(0,0,0,0.07)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);display:flex;padding-bottom:var(--sab);z-index:200;box-shadow:0 -4px 24px rgba(0,0,0,0.07)}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0 8px;gap:3px;background:none;border:none;cursor:pointer;color:var(--muted);font-family:'DM Sans',sans-serif;transition:color .15s}
 .nav-btn.active{color:var(--leaf)}
 .nav-icon{font-size:21px;line-height:1}
 .nav-label{font-size:10px;font-weight:500;letter-spacing:.3px}
 
 /* ── DISCOVER ── */
-.hero{background:var(--jungle);color:#fff;padding:calc(var(--st)+52px) 20px 28px;position:relative;overflow:hidden}
+.hero{background:var(--jungle);color:#fff;padding-left:20px;padding-right:20px;padding-bottom:28px;padding-top:var(--sat);position:relative;overflow:hidden}
+.hero-inner{padding-top:16px}
 .hero::before{content:'';position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(143,206,120,.15) 0%,transparent 70%)}
 .hero::after{content:'';position:absolute;bottom:-30px;left:-30px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(229,184,64,.1) 0%,transparent 70%)}
 .hero-eyebrow{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:6px}
@@ -84,7 +86,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .chip[data-f="food"].on{background:var(--terracotta)}
 .chip[data-f="other"].on{background:var(--lavender)}
 
-.cards-list{padding:8px 14px calc(var(--sb)+90px);display:flex;flex-direction:column;gap:10px}
+.cards-list{padding:8px 14px calc(var(--sab)+90px);display:flex;flex-direction:column;gap:10px}
 .card{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border);cursor:pointer;transition:transform .15s,box-shadow .15s}
 .card:active{transform:scale(.985);box-shadow:0 1px 8px rgba(0,0,0,.07)}
 .card-stripe{height:3px}
@@ -116,7 +118,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .save-btn:active{transform:scale(1.3)}
 
 /* ── PLANNER ── */
-.planner-header{background:var(--jungle);color:#fff;padding:calc(var(--st)+52px) 20px 16px}
+.planner-header{background:var(--jungle);color:#fff;padding-left:20px;padding-right:20px;padding-bottom:16px;padding-top:var(--sat)}
 .planner-header h2{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin-bottom:2px}
 .planner-header p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:12px}
 .planner-sync-row{display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.5)}
@@ -158,10 +160,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .empty-plan p{font-size:14px}
 
 /* ── POLL ── */
-.poll-header{background:var(--jungle);color:#fff;padding:calc(var(--st)+52px) 20px 20px}
+.poll-header{background:var(--jungle);color:#fff;padding-left:20px;padding-right:20px;padding-bottom:20px;padding-top:var(--sat)}
 .poll-header h2{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin-bottom:4px}
 .poll-header p{font-size:13px;color:rgba(255,255,255,.55)}
-.poll-list{padding:10px 16px calc(var(--sb)+80px);display:flex;flex-direction:column;gap:8px}
+.poll-list{padding:10px 16px calc(var(--sab)+80px);display:flex;flex-direction:column;gap:8px}
 .poll-card{background:var(--surface);border-radius:14px;padding:13px 14px;border:1px solid var(--border);box-shadow:0 1px 8px rgba(0,0,0,.05)}
 .poll-name{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
 .poll-loc{font-size:11px;color:var(--muted);margin-bottom:8px}
@@ -173,10 +175,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .poll-vote-btn.voted{background:var(--jungle);color:#fff;border-color:var(--jungle)}
 
 /* ── ADMIN ── */
-.admin-header{background:var(--jungle);color:#fff;padding:calc(var(--st)+52px) 20px 20px}
+.admin-header{background:var(--jungle);color:#fff;padding-left:20px;padding-right:20px;padding-bottom:20px;padding-top:var(--sat)}
 .admin-header h2{font-family:'Fraunces',serif;font-size:24px;font-weight:700;margin-bottom:4px}
 .admin-header p{font-size:13px;color:rgba(255,255,255,.55)}
-.admin-body{padding:16px;display:flex;flex-direction:column;gap:14px;padding-bottom:calc(var(--sb)+80px)}
+.admin-body{padding:16px;display:flex;flex-direction:column;gap:14px;padding-bottom:calc(var(--sab)+80px)}
 .admin-card{background:var(--surface);border-radius:var(--radius);padding:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
 .admin-card h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin-bottom:3px;color:var(--ink)}
 .admin-card p{font-size:13px;color:var(--muted);margin-bottom:12px;line-height:1.5}
@@ -217,7 +219,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 /* ── MODAL ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(10,28,18,.65);z-index:300;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(4px)}
 .modal-overlay.open{opacity:1;pointer-events:all}
-.modal{background:var(--bg);border-radius:24px 24px 0 0;width:100%;max-height:88dvh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);padding-bottom:var(--sb)}
+.modal{background:var(--bg);border-radius:24px 24px 0 0;width:100%;max-height:88dvh;overflow-y:auto;transform:translateY(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);padding-bottom:var(--sab)}
 .modal-overlay.open .modal{transform:translateY(0)}
 .modal-handle{width:36px;height:4px;background:rgba(0,0,0,.12);border-radius:2px;margin:12px auto 0}
 .modal-accent{height:3px;margin:12px 20px 0;border-radius:2px}
@@ -246,7 +248,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .july-badge{display:inline-flex;align-items:center;gap:4px;background:#e8f4ec;color:var(--leaf);font-size:11px;font-weight:600;padding:3px 8px;border-radius:8px;margin-bottom:8px}
 
 /* ── LOGIN ── */
-.login-screen{position:fixed;inset:0;background:var(--jungle);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px}
+.login-screen{position:fixed;inset:0;background:var(--jungle);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--sat) 32px var(--sab)}
 .login-screen.hidden{display:none}
 .login-emoji{font-size:56px;margin-bottom:16px}
 .login-title{font-family:'Fraunces',serif;font-size:30px;font-weight:700;color:#fff;margin-bottom:6px;text-align:center}
@@ -268,7 +270,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;cursor:pointer;border:2px solid transparent;transition:all .2s;flex-direction:column;gap:1px}
 .avatar.selected{border-color:#fff;transform:scale(1.08)}
 .avatar .av-name{font-size:9px;color:rgba(255,255,255,.7);text-align:center;margin-top:4px;font-weight:400}
-.user-indicator{position:fixed;top:calc(var(--st)+10px);right:14px;z-index:150;background:rgba(13,43,26,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:20px;padding:5px 12px;font-size:12px;color:#fff;display:flex;align-items:center;gap:5px;border:1px solid rgba(255,255,255,.15)}
+.user-indicator{position:fixed;top:14px;right:14px;z-index:150;background:rgba(13,43,26,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:20px;padding:5px 12px;font-size:12px;color:#fff;display:flex;align-items:center;gap:5px;border:1px solid rgba(255,255,255,.15)}
 
 /* ── UTIL ── */
 .empty-state{text-align:center;padding:50px 24px;color:var(--muted)}
@@ -278,9 +280,82 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 @keyframes spin{to{transform:rotate(360deg)}}
 .progress-bar{height:3px;background:rgba(255,255,255,.15);border-radius:2px;margin-top:10px;overflow:hidden}
 .progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .3s}
-.notify{position:fixed;top:calc(var(--st)+70px);left:50%;transform:translateX(-50%);background:var(--jungle);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:500;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.notify{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:var(--jungle);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:500;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.2)}
 .notify.show{opacity:1}
 </style>
+
+<style>
+/* Ensure no content ever hides behind status bar on any iPhone model */
+.view { padding-top: 0; }
+</style>
+<script>
+// Safe area detection — runs BEFORE paint to prevent flash of hidden content
+(function() {
+  function applyInsets() {
+    var top = 54; // safe default: covers all notched iPhones incl. Dynamic Island
+    var bot = 34; // safe default: covers all home-indicator iPhones
+    
+    // Try to read actual values via CSS env() through a test element
+    try {
+      var el = document.createElement('div');
+      el.style.cssText = [
+        'position:fixed',
+        'top:env(safe-area-inset-top,54px)',
+        'left:0',
+        'width:1px',
+        'height:1px',
+        'pointer-events:none',
+        'visibility:hidden',
+        'z-index:-1'
+      ].join(';');
+      document.documentElement.appendChild(el);
+      var computed = getComputedStyle(el).top;
+      var parsed = parseFloat(computed);
+      if (!isNaN(parsed) && parsed > 0) top = parsed + 16; // add breathing room
+      else if (!isNaN(parsed) && parsed === 0) top = 54; // env() returned 0, use safe default
+      document.documentElement.removeChild(el);
+      
+      // Bottom
+      var el2 = document.createElement('div');
+      el2.style.cssText = [
+        'position:fixed',
+        'bottom:env(safe-area-inset-bottom,34px)',
+        'left:0',
+        'width:1px',
+        'height:1px',
+        'pointer-events:none',
+        'visibility:hidden',
+        'z-index:-1'
+      ].join(';');
+      document.documentElement.appendChild(el2);
+      var computed2 = getComputedStyle(el2).bottom;
+      var parsed2 = parseFloat(computed2);
+      if (!isNaN(parsed2) && parsed2 > 0) bot = parsed2 + 8;
+      document.documentElement.removeChild(el2);
+    } catch(e) {}
+    
+    // Apply to CSS variables on root
+    var root = document.documentElement;
+    // Add extra space for the header text below the status bar
+    top = Math.max(top, 54); // never less than 54px
+    bot = Math.max(bot, 20);
+    root.style.setProperty('--sat', top + 'px');
+    root.style.setProperty('--sab', bot + 'px');
+    
+    // Also set padding-top on all .page-header elements directly as a fallback
+    root.style.setProperty('--header-pad-top', top + 'px');
+  }
+  
+  // Run immediately
+  applyInsets();
+  // Run again after load in case values changed
+  window.addEventListener('load', applyInsets);
+  // Run on orientation change
+  window.addEventListener('orientationchange', function() {
+    setTimeout(applyInsets, 200);
+  });
+})();
+</script>
 </head>
 <body>
 
@@ -318,13 +393,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 <!-- ══════════ DISCOVER VIEW ══════════ -->
 <div class="view active" id="viewDiscover">
   <div class="hero">
-    <div class="hero-eyebrow">Brazil · July 2025</div>
-    <h1>Travel <em>Intelligence</em></h1>
-    <div class="hero-sub">Live-scraped · AI categorized · Group-curated</div>
-    <div class="hero-pills">
-      <span class="pill ig">📸 Instagram</span>
-      <span class="pill tt">🎵 TikTok</span>
-      <span class="pill yt">▶ YouTube</span>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Brazil · July 2025</div>
+      <h1>Travel <em>Intelligence</em></h1>
+      <div class="hero-sub">Live-scraped · AI categorized · Group-curated</div>
+      <div class="hero-pills">
+        <span class="pill ig">📸 Instagram</span>
+        <span class="pill tt">🎵 TikTok</span>
+        <span class="pill yt">▶ YouTube</span>
+      </div>
     </div>
   </div>
   <div class="stats-bar">
@@ -349,13 +426,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 <!-- ══════════ PLANNER VIEW ══════════ -->
 <div class="view" id="viewPlanner">
   <div class="planner-header">
-    <h2>Group Itinerary</h2>
-    <p>One shared plan — everyone sees &amp; edits this</p>
-    <div class="planner-sync-row">
-      <div class="sync-dot" id="syncDot"></div>
-      <span id="syncStatus">Connecting…</span>
+    <div class="hero-inner">
+      <h2>Group Itinerary</h2>
+      <p>One shared plan — everyone sees &amp; edits this</p>
+      <div class="planner-sync-row">
+        <div class="sync-dot" id="syncDot"></div>
+        <span id="syncStatus">Connecting…</span>
+      </div>
+      <div class="trip-dates" id="dayTabs"></div>
     </div>
-    <div class="trip-dates" id="dayTabs"></div>
   </div>
   <div class="day-plan" style="padding:14px 16px 0">
     <div class="day-label">
@@ -374,8 +453,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 <!-- ══════════ POLL VIEW ══════════ -->
 <div class="view" id="viewPoll">
   <div class="poll-header">
-    <h2>Group Poll</h2>
-    <p>Vote on places — top picks shape the itinerary</p>
+    <div class="hero-inner">
+      <h2>Group Poll</h2>
+      <p>Vote on places — top picks shape the itinerary</p>
+    </div>
   </div>
   <div class="poll-list" id="pollList"></div>
 </div>
@@ -383,8 +464,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 <!-- ══════════ ADMIN VIEW ══════════ -->
 <div class="view" id="viewAdmin">
   <div class="admin-header">
-    <h2>Admin</h2>
-    <p>Run fresh scrapes, manage sources, configure the app</p>
+    <div class="hero-inner">
+      <h2>Admin</h2>
+      <p>Run fresh scrapes, manage sources, configure the app</p>
+    </div>
   </div>
   <div class="admin-body">
 
