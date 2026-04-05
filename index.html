@@ -421,10 +421,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
     <!-- API KEYS -->
     <div class="admin-card">
       <h3>🔑 API Keys</h3>
-      <p>Required for real-time scraping and AI categorization. Keys are stored locally on this device only.</p>
-      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px">
-        <input class="form-input" type="password" id="apifyKey" placeholder="Apify API key (apify_api_...)">
-        <input class="form-input" type="password" id="claudeKey" placeholder="Anthropic API key (sk-ant-...)">
+      <p>Keys are stored locally on this device only — never sent anywhere except the APIs themselves.</p>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Apify — for scraping Instagram, TikTok, YouTube</div>
+          <input class="form-input" type="password" id="apifyKey" placeholder="apify_api_...  (get free key at apify.com)">
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">AI — for categorizing scraped content (pick one)</div>
+          <input class="form-input" type="password" id="openaiKey" placeholder="OpenAI key: sk-...  (GPT-4o — recommended)" style="margin-bottom:6px">
+          <input class="form-input" type="password" id="claudeKey" placeholder="OR Anthropic key: sk-ant-...  (Claude)">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">If you add both, OpenAI will be used. Only one is needed.</div>
+        </div>
       </div>
       <button class="btn btn-primary btn-sm" onclick="saveKeys()">Save keys</button>
     </div>
@@ -658,7 +666,13 @@ const SYNC_KEY = 'brazil_sync_bin';
 let _sharedItin = null;
 let _syncTimer = null;
 
-function getSyncBin() { return ls(SYNC_KEY) || null; }
+function getSyncBin() {
+  // Pre-configured bin for this group — can be overridden in Admin
+  const stored = ls(SYNC_KEY);
+  if(stored) return stored;
+  // Default bin (Prity's group bin)
+  return {id:'69d2c931856a682189013b51', key:null};
+}
 
 async function fetchSharedItin() {
   const bin = getSyncBin();
@@ -1123,9 +1137,7 @@ function renderAdmin() {
   renderTagList('ig');
   renderTagList('tt');
   renderTagList('yt');
-  const keys = ls('brazil_keys')||{};
-  if(keys.apify) document.getElementById('apifyKey').value='••••••••';
-  if(keys.claude) document.getElementById('claudeKey').value='••••••••';
+  renderAdminKeys();
 
   // Users list
   const members = getMembers();
@@ -1172,12 +1184,22 @@ function saveSyncConfig() {
 
 function saveKeys() {
   const ak = document.getElementById('apifyKey').value;
+  const ok = document.getElementById('openaiKey').value;
   const ck = document.getElementById('claudeKey').value;
   const keys = ls('brazil_keys')||{};
   if(ak && !ak.startsWith('•')) keys.apify = ak;
+  if(ok && !ok.startsWith('•')) keys.openai = ok;
   if(ck && !ck.startsWith('•')) keys.claude = ck;
   lsSet('brazil_keys', keys);
-  showNotify('✅ Keys saved locally');
+  const aiProvider = keys.openai ? 'GPT-4o (OpenAI)' : keys.claude ? 'Claude (Anthropic)' : 'none yet';
+  showNotify('✅ Keys saved — AI: ' + aiProvider);
+}
+
+function renderAdminKeys() {
+  const keys = ls('brazil_keys')||{};
+  if(keys.apify) document.getElementById('apifyKey').value='••••••••';
+  if(keys.openai) document.getElementById('openaiKey').value='••••••••';
+  if(keys.claude) document.getElementById('claudeKey').value='••••••••';
 }
 
 function log(msg, type='info') {
@@ -1316,15 +1338,30 @@ Merge any that refer to the same place. Ignore non-Brazil content, promotional p
 
 Return ONLY the JSON array.`;
 
-      const claudeResp = await fetch('https://api.anthropic.com/v1/messages', {
-        method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':keys.claude,'anthropic-version':'2023-06-01'},
-        body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})
-      });
-
+      // Supports both OpenAI (GPT-4o) and Anthropic (Claude) — whichever key you provide
+      let aiText = '';
+      if(keys.openai) {
+        const r = await fetch('https://api.openai.com/v1/chat/completions', {
+          method:'POST',
+          headers:{'Content-Type':'application/json','Authorization':'Bearer '+keys.openai},
+          body: JSON.stringify({model:'gpt-4o',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+        });
+        if(r.ok){ const d=await r.json(); aiText=d.choices?.[0]?.message?.content||''; }
+        else log('⚠️ OpenAI error: '+r.status,'err');
+      } else if(keys.claude) {
+        const r = await fetch('https://api.anthropic.com/v1/messages', {
+          method:'POST',
+          headers:{'Content-Type':'application/json','x-api-key':keys.claude,'anthropic-version':'2023-06-01'},
+          body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:4000,messages:[{role:'user',content:prompt}]})
+        });
+        if(r.ok){ const d=await r.json(); aiText=d.content?.[0]?.text||''; }
+        else log('⚠️ Claude error: '+r.status,'err');
+      } else {
+        log('⚠️ No AI key found — add OpenAI or Claude key in Admin','err');
+      }
+      const claudeResp = {ok: !!aiText};
       if(claudeResp.ok) {
-        const claudeData = await claudeResp.json();
-        const text = claudeData.content?.[0]?.text||'';
+        const text = aiText;
         try {
           const clean = text.replace(/```json|```/g,'').trim();
           const newItems = JSON.parse(clean);
